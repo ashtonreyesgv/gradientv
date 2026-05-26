@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>rAIes Systems</title>
+  <title>GradientV</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +20,7 @@
         <a href="#about">About</a>
         <a href="#phases">Process</a>
         <a href="#examples">Examples</a>
+        <a href="#team">Team</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -32,45 +33,19 @@
           <p class="eyebrow">AI systems for small business operations</p>
           <h1>Helping businesses adopt AI in practical, measurable ways.</h1>
           <p class="hero-text">
-            rAIes Systems helps businesses modernize with AI through workflow automation,
+            GradientV helps businesses modernize with AI through workflow automation,
             analytics, websites, dashboards, and ongoing implementation support.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="section founder-section" id="about">
-      <div class="container founder-grid">
-        <div class="founder-photo-wrap">
-          <img
-            src="./images/founder.jpg"
-            alt="Portrait of Ashton Reyes"
-            class="founder-photo"
-          />
-        </div>
-
-        <div class="founder-copy">
-          <p class="section-label">Founder</p>
-          <h2>Built by a technical founder with a data-driven background.</h2>
-        <p>
-            I’m Ashton Reyes, founder of rAIes Systems, with a background in Computer Science and Applied Mathematics and a
-            focus on data science, machine learning, and applied AI systems.
-        </p>
-        <p>
-            My experience includes coursework in data science, data mining, machine learning, and analytics, along with hands-on
-            exposure to AI implementation through CRIZM, an AI-powered platform designed to support grading workflows, feedback
-            systems, and academic outcomes reporting.
-        </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="mission">
+    <section class="section" id="about">
       <div class="container narrow">
         <p class="section-label">Mission</p>
         <h2>Make AI useful, structured, and sustainable for growing businesses.</h2>
         <p>
-          The goal of rAIes Systems is to help businesses reduce repetitive work, improve visibility
+          The goal of GradientV is to help businesses reduce repetitive work, improve visibility
           into their operations, and adopt AI with clarity instead of hype.
         </p>
       </div>
@@ -134,13 +109,184 @@
       </div>
     </section>
 
+    <!-- Meet the Team — moved above contact -->
+    <style>
+      .team-member {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        margin-bottom: 5rem;
+      }
+      .team-member.reverse .team-photo-wrap { order: 2; }
+      .team-member.reverse .team-copy     { order: 1; }
+
+      .team-photo-wrap { width: 100%; }
+      .team-photo {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+        border-radius: 4px;
+        display: block;
+      }
+      .team-photo-placeholder {
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        background: #e8e4dc;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: 0.08em;
+        color: #aaa;
+      }
+
+      .team-copy { }
+
+      .team-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.25rem;
+      }
+      .team-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.7rem;
+        border: 1px solid #c8c4bc;
+        border-radius: 3px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: inherit;
+        text-decoration: none;
+        opacity: 0.7;
+        transition: opacity 0.15s ease, border-color 0.15s ease;
+      }
+      .team-link:hover { opacity: 1; border-color: #888; }
+      .team-link svg {
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
+        fill: currentColor;
+      }
+    </style>
+
+    <section class="section" id="team">
+      <div class="container">
+        <p class="section-label">Team</p>
+        <h2>Meet the team.</h2>
+
+        <!-- Ashton Reyes — photo left -->
+        <div class="team-member">
+          <div class="team-photo-wrap">
+            <img src="./images/founder.jpg" alt="Portrait of Ashton Reyes" class="team-photo" />
+          </div>
+          <div class="team-copy">
+            <p class="section-label">Founder</p>
+            <h2>Ashton Reyes</h2>
+            <p>
+              I'm Ashton Reyes, founder of GradientV, with a background in Computer Science and Applied Mathematics and a
+              focus on data science, machine learning, and applied AI systems.
+            </p>
+            <p>
+              My experience includes coursework in data science, data mining, machine learning, and analytics, along with hands-on
+              exposure to AI implementation through CRIZM, an AI-powered platform designed to support grading workflows, feedback
+              systems, and academic outcomes reporting.
+            </p>
+            <div class="team-links">
+              <a href="https://ashtonreyes.com/" class="team-link" target="_blank" rel="noopener noreferrer">
+                <!-- Globe icon -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2c.93 0 1.98.48 2.95 1.76.48.63.92 1.42 1.28 2.24H7.77c.36-.82.8-1.61 1.28-2.24C10.02 4.48 11.07 4 12 4zm-4.13.93C7.3 5.67 6.83 6.48 6.47 7.3c-.37.04-.73.1-1.07.18A8.02 8.02 0 0 1 7.87 4.93zM16.13 4.93A8.02 8.02 0 0 1 18.6 7.48c-.34-.08-.7-.14-1.07-.18-.36-.82-.83-1.63-1.4-2.37zM5.3 9.3c.52-.1 1.07-.18 1.65-.22.1.6.15 1.23.15 1.92H4c.1-.6.34-1.18.65-1.7h.65zm4.15-.22c.84-.05 1.68-.08 2.55-.08s1.71.03 2.55.08c.11.59.17 1.23.17 1.92h-5.44c0-.69.06-1.33.17-1.92zm6.9 0c.58.04 1.13.12 1.65.22.31.52.55 1.1.65 1.7H16.9c0-.69-.05-1.32-.15-1.92h-.4zm-12.35 4h3.1c.05.69.16 1.33.32 1.92-.57-.04-1.12-.12-1.63-.22-.37-.52-.64-1.1-.79-1.7zm5.1 0h5.8c-.06.69-.18 1.33-.37 1.88-.82.08-1.66.12-2.53.12s-1.71-.04-2.53-.12c-.19-.55-.31-1.19-.37-1.88zm7.8 0h3.1c-.15.6-.42 1.18-.79 1.7-.51.1-1.06.18-1.63.22.16-.59.27-1.23.32-1.92zm-11.44 3.7c.35.08.72.14 1.1.18.39.85.87 1.64 1.44 2.35C6.76 18.74 5.58 17.4 5.46 17.48zm1.1.18zm.1 0c.84.09 1.72.14 2.62.14.25.36.52.7.81 1.01-.68-.09-1.34-.3-1.96-.59-.54-.47-1.04-1.02-1.47-1.56zm2.72.14c.86 0 1.74-.05 2.62-.14.01 0 .01 0 .01-.01.9.09 1.78.14 2.62.14-.43.54-.93 1.09-1.47 1.56-.62.29-1.28.5-1.96.59.29-.31.56-.65.81-1.01-.87 0-1.75-.05-2.62-.14.25.36.52.7.81 1.01-.68-.09-1.34-.3-1.96-.59-.54-.47-1.04-1.02-1.47-1.56h.61zm5.24.14c.9 0 1.78-.05 2.62-.14-.43.54-.93 1.09-1.47 1.56-.62.29-1.28.5-1.96.59.29-.31.56-.65.81-1.01z"/></svg>
+                Website
+              </a>
+              <a href="https://www.linkedin.com/in/ashton-reyes/" class="team-link" target="_blank" rel="noopener noreferrer">
+                <!-- LinkedIn icon -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </a>
+              <a href="https://github.com/ashton-reyes" class="team-link" target="_blank" rel="noopener noreferrer">
+                <!-- GitHub icon -->
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bryce Whiteside — photo right (reversed) -->
+        <div class="team-member reverse">
+          <div class="team-photo-wrap">
+            <!-- Placeholder — swap with ./images/bryce.jpg when available -->
+            <div class="team-photo-placeholder">BW</div>
+          </div>
+          <div class="team-copy">
+            <p class="section-label">Co-founder</p>
+            <h2>Bryce Whiteside</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+            <p>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+              sed perspiciatis unde omnis iste natus error sit voluptatem.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com/in/brycewhiteside/" class="team-link" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </a>
+              <a href="https://github.com/Brycewhi" class="team-link" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emily Fisherman — photo left -->
+        <div class="team-member" style="margin-bottom: 0;">
+          <div class="team-photo-wrap">
+            <!-- Placeholder — swap with ./images/emily.jpg when available -->
+            <div class="team-photo-placeholder">EF</div>
+          </div>
+          <div class="team-copy">
+            <p class="section-label">Head of Marketing &amp; Finance</p>
+            <h2>Emily Fisherman</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+            <p>
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+              sed perspiciatis unde omnis iste natus error sit voluptatem.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com/in/emily-fisherman-12758b394/" class="team-link" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <section class="section contact-section" id="contact">
       <div class="container contact-card">
         <div class="contact-intro">
           <p class="section-label contact-label">Contact</p>
-          <h2>Let’s build a smarter operating system for your business.</h2>
+          <h2>Let's build a smarter operating system for your business.</h2>
           <p class="contact-text">
-            rAIes Systems is focused on practical AI implementation for companies that want
+            GradientV is focused on practical AI implementation for companies that want
             modern systems without unnecessary complexity.
           </p>
         </div>
@@ -151,19 +297,19 @@
             <span class="contact-value">(917) 907-1034</span>
           </a>
 
-          <a href="mailto:ashtonreyes0719@gmail.com" class="contact-item">
+          <a href="mailto:ashtonreyes0@gradientv.com" class="contact-item">
             <span class="contact-kicker">Email</span>
-            <span class="contact-value">ashtonreyes0719@gmail.com</span>
+            <span class="contact-value">ashtonreyes@gradientv.com</span>
           </a>
 
           <a
-            href="https://www.linkedin.com/in/ashton-reyes/"
+            href="https://www.linkedin.com/company/gradientv"
             class="contact-item"
             target="_blank"
             rel="noopener noreferrer"
           >
             <span class="contact-kicker">LinkedIn</span>
-            <span class="contact-value">linkedin.com/in/ashton-reyes</span>
+            <span class="contact-value">linkedin.com/company/gradientv</span>
           </a>
         </div>
       </div>
