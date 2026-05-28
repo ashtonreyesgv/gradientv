@@ -7,15 +7,28 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
+  <!-- Top banner strip: full horizontal lockup (Λ + GRADIENT + V chevron) -->
+  <div class="gv-top-banner">
+    <div class="container">
+      <a href="#" class="gv-banner-lockup" aria-label="GradientV">
+        <svg class="gv-banner-tri" viewBox="-15 -15 230 195" aria-hidden="true">
+          <path d="M 0 156 L 100 0 L 200 156" fill="none" stroke="currentColor" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt" />
+        </svg>
+        <span class="gv-banner-word">Gradient</span>
+        <svg class="gv-banner-v" viewBox="-15 -15 230 195" aria-hidden="true">
+          <path d="M 0 0 L 100 156 L 200 0" fill="none" stroke="currentColor" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#" class="brand-name">GradientV</a>
-
       <nav class="nav">
         <a href="#about">About</a>
         <a href="#phases">Process</a>
@@ -23,6 +36,13 @@
         <a href="#team">Team</a>
         <a href="#contact">Contact</a>
       </nav>
+
+      <a href="#" class="gv-stacked-mark" aria-label="GradientV">
+        <svg viewBox="-15 -15 230 195" aria-hidden="true">
+          <path d="M 0 156 L 100 0 L 200 156" fill="none" stroke="currentColor" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt" />
+        </svg>
+        <span>Gradient</span>
+      </a>
     </div>
   </header>
 
@@ -282,6 +302,9 @@
 
     <section class="section contact-section" id="contact">
       <div class="container contact-card">
+        <svg class="contact-mark" viewBox="-15 -15 230 195" aria-hidden="true">
+          <path d="M 0 156 L 100 0 L 200 156" fill="none" stroke="currentColor" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt" />
+        </svg>
         <div class="contact-intro">
           <p class="section-label contact-label">Contact</p>
           <h2>Let's build a smarter operating system for your business.</h2>
@@ -297,9 +320,9 @@
             <span class="contact-value">(917) 907-1034</span>
           </a>
 
-          <a href="mailto:ashtonreyes0@gradientv.com" class="contact-item">
+          <a href="/cdn-cgi/l/email-protection#4c2d3f243823223e2935293f7c0c2b3e2d28252922383a622f2321" class="contact-item">
             <span class="contact-kicker">Email</span>
-            <span class="contact-value">ashtonreyes@gradientv.com</span>
+            <span class="contact-value"><span class="__cf_email__" data-cfemail="6a0b19021e0504180f130f192a0d180b0e030f041e1c44090507">[email&#160;protected]</span></span>
           </a>
 
           <a
@@ -315,5 +338,5 @@
       </div>
     </section>
   </main>
-</body>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
 </html>
