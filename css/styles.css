@@ -53,7 +53,7 @@ img {
 
 .site-header {
   position: sticky;
-  top: 0;
+  top: var(--gv-banner-h, 88px);
   z-index: 20;
   background: rgba(245, 241, 234, 0.88);
   backdrop-filter: blur(12px);
@@ -177,16 +177,14 @@ p {
   background: var(--surface-2);
 }
 
-.card-grid,
-.examples-list {
+.card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
   margin-top: 2rem;
 }
 
-.card,
-.example-item {
+.card {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -316,8 +314,7 @@ p {
     padding: 4.5rem 0 3rem;
   }
 
-  .card-grid,
-  .examples-list {
+  .card-grid {
     grid-template-columns: 1fr;
   }
 
@@ -332,10 +329,27 @@ p {
 
 /* ── GradientV identity · top banner + stacked corner mark ───── */
 .gv-top-banner {
+  position: sticky;
+  top: 0;
+  z-index: 30;                       /* above .site-header (z:20) */
   width: 100%;
+  height: var(--gv-banner-h, 88px);
   background: var(--bg);
-  padding: 1.5rem 0 1.4rem;
   border-bottom: 1px solid var(--line);
+  line-height: 0;                    /* kill inline-image baseline gap */
+  overflow: hidden;
+}
+.gv-top-banner a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.gv-top-banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 .gv-banner-lockup {
   display: flex;
@@ -485,4 +499,75 @@ p {
   .gv-banner-v { width: 1.2em; }
   .gv-stacked-mark svg { width: 22px; }
   .gv-stacked-mark span { font-size: 0.55rem; }
+}
+
+
+/* ── Services grid (replaces the old Process cards) ──────────── */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2.4rem;
+}
+
+.service {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+.service:hover {
+  border-color: color-mix(in srgb, var(--text) 20%, var(--line));
+  transform: translateY(-2px);
+}
+
+.service h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 0 0 0.05rem;
+}
+
+.service-tag {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin: 0 0 0.45rem;
+  line-height: 1.45;
+}
+
+.service ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+.service ul li {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--text);
+  position: relative;
+  padding-left: 0.95rem;
+}
+.service ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 1px;
+  background: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .service-grid { grid-template-columns: 1fr; }
 }

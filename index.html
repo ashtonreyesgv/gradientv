@@ -12,27 +12,19 @@
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-  <!-- Top banner strip: full horizontal lockup (Λ + GRADIENT + V chevron) -->
+  <!-- Top banner strip: sticky, displays /images/banner1.png -->
   <div class="gv-top-banner">
-    <div class="container">
-      <a href="#" class="gv-banner-lockup" aria-label="GradientV">
-        <svg class="gv-banner-tri" viewBox="-15 -15 230 195" aria-hidden="true">
-          <path d="M 0 156 L 100 0 L 200 156" fill="none" stroke="currentColor" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt" />
-        </svg>
-        <span class="gv-banner-word">Gradient</span>
-        <svg class="gv-banner-v" viewBox="-15 -15 230 195" aria-hidden="true">
-          <path d="M 0 0 L 100 156 L 200 0" fill="none" stroke="currentColor" stroke-width="22" stroke-linejoin="miter" stroke-linecap="butt" />
-        </svg>
-      </a>
-    </div>
+    <a href="#" aria-label="GradientV">
+      <img src="images/banner1.png" alt="GradientV" />
+    </a>
+  </div>
   </div>
 
   <header class="site-header">
     <div class="container header-inner">
       <nav class="nav">
         <a href="#about">About</a>
-        <a href="#phases">Process</a>
-        <a href="#examples">Examples</a>
+        <a href="#services">Services</a>
         <a href="#team">Team</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -71,63 +63,82 @@
       </div>
     </section>
 
-    <section class="section" id="phases">
+    <section class="section" id="services">
       <div class="container">
-        <p class="section-label">Process</p>
-        <h2>How the work is structured.</h2>
+        <p class="section-label">Services</p>
+        <h2>What I help businesses build.</h2>
 
-        <div class="card-grid">
-          <article class="card">
-            <h3>01. Assessment</h3>
-            <p>Understand the business, current workflows, pain points, and realistic AI opportunities.</p>
+        <div class="service-grid">
+
+          <article class="service">
+            <h3>Website &amp; domain</h3>
+            <p class="service-tag">A clean web presence with the basics dialed in.</p>
+            <ul>
+              <li>Landing page or full business site</li>
+              <li>Custom domain + Google Workspace email</li>
+              <li>Contact &amp; booking integration</li>
+              <li>SEO and analytics setup</li>
+            </ul>
           </article>
 
-          <article class="card">
-            <h3>02. Roadmap</h3>
-            <p>Define the right systems, automations, analytics, and implementation priorities.</p>
+          <article class="service">
+            <h3>Dashboards &amp; reporting</h3>
+            <p class="service-tag">Owner-facing KPI dashboards in Looker Studio.</p>
+            <ul>
+              <li>Connect bookings, CRM, sheets, or exports</li>
+              <li>Define and track core metrics</li>
+              <li>Bookings, revenue, no-show &amp; cancellation views</li>
+              <li>Filter by date, staff, or service</li>
+            </ul>
           </article>
 
-          <article class="card">
-            <h3>03. Build</h3>
-            <p>Set up practical solutions such as websites, dashboards, automations, and AI-assisted tools.</p>
+          <article class="service">
+            <h3>Workflow automation</h3>
+            <p class="service-tag">Routing, reminders, and triggers across your tools.</p>
+            <ul>
+              <li>Lead capture &amp; follow-up</li>
+              <li>Booking confirmations &amp; calendar events</li>
+              <li>Client onboarding &amp; intake</li>
+              <li>Internal reminders &amp; weekly digests</li>
+            </ul>
           </article>
 
-          <article class="card">
-            <h3>04. Oversight</h3>
-            <p>Monitor performance, refine systems, and support long-term AI adoption.</p>
+          <article class="service">
+            <h3>Document &amp; finance automation</h3>
+            <p class="service-tag">Paperwork and money on autopilot.</p>
+            <ul>
+              <li>Proposals &amp; contracts for signature</li>
+              <li>Auto-filing of signed documents</li>
+              <li>Invoice generation &amp; payment reminders</li>
+              <li>Cash-flow summaries &amp; recurring reports</li>
+            </ul>
           </article>
+
+          <article class="service">
+            <h3>Customer FAQ assistant</h3>
+            <p class="service-tag">A website chatbot that handles routine questions.</p>
+            <ul>
+              <li>Answers on hours, pricing, services, policies</li>
+              <li>Guides visitors to bookings</li>
+              <li>Transfers to a human when needed</li>
+            </ul>
+          </article>
+
+          <article class="service">
+            <h3>Internal knowledge assistant</h3>
+            <p class="service-tag">A private RAG assistant trained on your own docs.</p>
+            <ul>
+              <li>Trained on SOPs, policies, onboarding</li>
+              <li>Helps staff find answers fast</li>
+              <li>Reduces repeated internal questions</li>
+            </ul>
+          </article>
+
         </div>
       </div>
     </section>
 
-    <section class="section" id="examples">
-      <div class="container">
-        <p class="section-label">Examples</p>
-        <h2>What this can look like for different businesses.</h2>
 
-        <div class="examples-list">
-          <div class="example-item">
-            <h3>Salon or spa</h3>
-            <p>Booking website, automated reminders, FAQ assistant, and customer trend tracking.</p>
-          </div>
-
-          <div class="example-item">
-            <h3>Restaurant or cafe</h3>
-            <p>Customer support automation, review handling, and sales or inventory insights.</p>
-          </div>
-
-          <div class="example-item">
-            <h3>Real estate business</h3>
-            <p>Lead capture website, follow-up automation, property FAQ tools, and analytics dashboards.</p>
-          </div>
-
-          <div class="example-item">
-            <h3>Professional office</h3>
-            <p>Client intake automation, document support, workflow analysis, and reporting tools.</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section class="section" id="team">
       <div class="container">
@@ -181,13 +192,10 @@
             <p class="section-label">Co-founder</p>
             <h2>Bryce Whiteside</h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              I’m Bryce Whiteside, a Stony Brook University double majoring in Computer Science and Applied Mathematics & Statistics. 
             </p>
             <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-              sed perspiciatis unde omnis iste natus error sit voluptatem.
+              I have experience in data engineering, quantitative analysis, and ML-driven analytics from projects spanning financial data pipelines, stochastic prediction engines, and optimization tools. At GradientV, I focus on building robust data infrastructure and analytics workflows that turn complex datasets into clear, actionable insight for our clients.
             </p>
             <div class="team-links">
               <a href="https://www.linkedin.com/in/brycewhiteside/" class="team-link" target="_blank" rel="noopener noreferrer">
@@ -252,10 +260,10 @@
             <span class="contact-value">(917) 907-1034</span>
           </a>
 
-          <a href="mailto:ashtonreyes@gradientv.com" class="contact-item">
-            <span class="contact-kicker">Email</span>
-            <span class="contact-value">ashtonreyes@gradientv.com</span>
-          </a>
+            <a href="mailto:contact@gradientv.com" class="contact-item">
+              <span class="contact-kicker">Email</span>
+              <span class="contact-value">contact@gradientv.com</span>
+            </a>
 
           <a
             href="https://www.linkedin.com/company/gradientv"
@@ -270,5 +278,5 @@
       </div>
     </section>
   </main>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
 </html>
