@@ -573,6 +573,13 @@ p {
   border: 1px solid var(--line);
   border-radius: 18px;
   box-shadow: var(--shadow);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.sponsor-logo:hover {
+  border-color: color-mix(in srgb, var(--text) 20%, var(--line));
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(31, 26, 23, 0.12);
 }
 
 .sponsor-logo img {
