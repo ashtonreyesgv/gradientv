@@ -20,7 +20,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: clip;
+  scroll-padding-top: 120px;
 }
 
 body {
