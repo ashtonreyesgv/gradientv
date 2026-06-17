@@ -93,24 +93,29 @@ img {
   color: var(--text);
 }
 
-.brand-banner {
-  padding: 3.25rem 0 0.5rem;
-}
-.brand-banner-img {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
 .hero {
-  padding: 3rem 0 4.5rem;
+  padding: 4.5rem 0 4.5rem;
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hero-mark-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-mark {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  transform: translateY(-2.5rem);
 }
 
 .eyebrow,
@@ -323,6 +328,14 @@ p {
 
   .hero {
     padding: 4.5rem 0 3rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-mark-wrap {
+    display: none;
   }
 
   .card-grid {
@@ -557,51 +570,130 @@ p {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 1.25rem;
   margin-top: 1.25rem;
 }
 
 .sponsor-logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 220px;
-  max-width: 280px;
-  min-height: 140px;
+  width: auto;
+  height: 130px;
+  max-width: 340px;
+  object-fit: contain;
   padding: 1.25rem 1.5rem;
-  background: rgba(253, 251, 247, 0.72);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
-  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition: transform 180ms ease;
 }
 
 .sponsor-logo:hover {
-  border-color: color-mix(in srgb, var(--text) 20%, var(--line));
   transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(31, 26, 23, 0.12);
 }
 
-.sponsor-logo img {
+.client-section {
+  padding: 2.5rem 0 1rem;
+}
+
+.client-rail-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.client-rail {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1.5rem 0.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.client-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.client-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.client-logo {
+  flex: 0 0 auto;
   width: auto;
-  height: 92px;
-  max-width: 100%;
+  height: 170px;
+  max-width: 340px;
   object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.78;
+  transition: filter 180ms ease, opacity 180ms ease;
+}
+
+.client-link:hover .client-logo,
+.client-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.client-arrow {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease, opacity 180ms ease;
+}
+
+.client-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.client-arrow:hover:not(:disabled) {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--text) 20%, var(--line));
+  transform: translateY(-1px);
+}
+
+.client-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Hide arrows entirely when there is nothing to scroll */
+.client-rail-wrap:not(.is-overflowing) .client-arrow {
+  display: none;
 }
 
 @media (max-width: 620px) {
+  .client-rail {
+    gap: 2rem;
+  }
+
+  .client-logo {
+    height: 84px;
+    max-width: 180px;
+  }
+
   .sponsor-rail {
     gap: 1rem;
   }
 
   .sponsor-logo {
-    min-width: 180px;
-    min-height: 110px;
+    height: 64px;
     padding: 1rem 1.1rem;
-  }
-
-  .sponsor-logo img {
-    height: 72px;
   }
 
   .footer-inner {
