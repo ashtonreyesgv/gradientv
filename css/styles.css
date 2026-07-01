@@ -655,15 +655,10 @@ p {
   height: 170px;
   max-width: 340px;
   object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.78;
-  transition: filter 180ms ease, opacity 180ms ease;
 }
 
-.client-link:hover .client-logo,
-.client-logo:hover {
-  filter: grayscale(0%);
-  opacity: 1;
+.client-logo--bukas {
+  height: 190px;
 }
 
 .client-arrow {
