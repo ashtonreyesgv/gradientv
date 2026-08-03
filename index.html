@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GradientV</title>
+  <meta name="description" content="GradientV builds websites, AI-powered dashboards, and workflow automation for growing small businesses. Practical AI implementation without unnecessary complexity." />
+
+  <link rel="canonical" href="https://gradientv.com/" />
+  <link rel="alternate" hreflang="en" href="https://gradientv.com/" />
+  <link rel="alternate" hreflang="es" href="https://gradientv.com/es/" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://gradientv.com/zh/" />
+  <link rel="alternate" hreflang="x-default" href="https://gradientv.com/" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +22,8 @@
   <header class="site-header">
     <div class="container header-inner">
       <nav class="nav">
+        <a href="#supported">Partnerships</a>
+        <a href="#clients">Clients</a>
         <a href="#services">Services</a>
         <a href="team.html">Team</a>
         <a href="contact.html">Contact</a>
@@ -40,6 +49,41 @@
         </div>
         <div class="hero-mark-wrap">
           <img src="./images/brand/mark_black_t.png" alt="" class="hero-mark" aria-hidden="true" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section sponsor-section" id="supported">
+      <div class="container">
+        <p class="section-label">Partnerships &amp; Supported/Sponsored By</p>
+        <div class="sponsor-rail" aria-label="Supported and sponsored by logos">
+          <img src="./images/sponsors/nysbdc.png" alt="NYSBDC" class="sponsor-logo" />
+          <img src="./images/sponsors/sbu.png" alt="SBU" class="sponsor-logo" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section client-section" id="clients">
+      <div class="container">
+        <p class="section-label">Selected Clients</p>
+
+        <div class="client-rail-wrap">
+          <button class="client-arrow client-arrow-prev" type="button" aria-label="Scroll clients left">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="client-rail" aria-label="Selected client logos">
+            <a href="https://inforeportingsolutions.vercel.app/" class="client-link" target="_blank" rel="noopener noreferrer">
+              <img src="./images/clients/inforeportingsolutionsnew.png" alt="InfoReporting Solutions" class="client-logo" />
+            </a>
+            <a href="https://bukascafe.vercel.app/" class="client-link" target="_blank" rel="noopener noreferrer">
+              <img src="./images/clients/bukascafe.png" alt="Bukas Cafe" class="client-logo" />
+            </a>
+          </div>
+
+          <button class="client-arrow client-arrow-next" type="button" aria-label="Scroll clients right">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -168,7 +212,48 @@
       </nav>
       <p class="footer-copy">&copy; 2026 GradientV. All rights reserved.</p>
     </div>
+
+    <div class="footer-langs-bar">
+      <div class="container footer-langs-inner">
+        <span class="footer-langs-label">Language</span>
+        <nav class="footer-langs" aria-label="Language">
+          <a href="./index.html" lang="en" hreflang="en" aria-current="page">English</a>
+          <a href="./es/index.html" lang="es" hreflang="es">Espa&ntilde;ol</a>
+          <a href="./zh/index.html" lang="zh-Hans" hreflang="zh-Hans">&#20013;&#25991;</a>
+        </nav>
+      </div>
+    </div>
   </footer>
+
+  <script>
+    (function () {
+      var wrap = document.querySelector('.client-rail-wrap');
+      if (!wrap) return;
+      var rail = wrap.querySelector('.client-rail');
+      var prev = wrap.querySelector('.client-arrow-prev');
+      var next = wrap.querySelector('.client-arrow-next');
+
+      function scrollByStep(dir) {
+        var step = Math.max(rail.clientWidth * 0.8, 240);
+        rail.scrollBy({ left: dir * step, behavior: 'smooth' });
+      }
+
+      if (prev) prev.addEventListener('click', function () { scrollByStep(-1); });
+      if (next) next.addEventListener('click', function () { scrollByStep(1); });
+
+      function updateArrows() {
+        var maxScroll = rail.scrollWidth - rail.clientWidth - 1;
+        var overflowing = maxScroll > 0;
+        wrap.classList.toggle('is-overflowing', overflowing);
+        if (prev) prev.disabled = !overflowing || rail.scrollLeft <= 0;
+        if (next) next.disabled = !overflowing || rail.scrollLeft >= maxScroll;
+      }
+
+      rail.addEventListener('scroll', updateArrows);
+      window.addEventListener('resize', updateArrows);
+      updateArrows();
+    })();
+  </script>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
 </html>
