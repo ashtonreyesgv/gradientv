@@ -5,7 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Videos - GradientV</title>
 
+  <meta name="description" content="A short introduction to GradientV, an AI consulting studio helping growing businesses adopt AI through modern websites, workflow automation, and AI-powered dashboards." />
+
   <link rel="canonical" href="https://gradientv.com/videos.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="GradientV" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Videos - GradientV" />
+  <meta property="og:description" content="A short introduction to GradientV, an AI consulting studio helping growing businesses adopt AI through modern websites, workflow automation, and AI-powered dashboards." />
+  <meta property="og:url" content="https://gradientv.com/videos.html" />
+  <meta property="og:image" content="https://gradientv.com/images/brand/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="GradientV" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Videos - GradientV" />
+  <meta name="twitter:description" content="A short introduction to GradientV, an AI consulting studio helping growing businesses adopt AI through modern websites, workflow automation, and AI-powered dashboards." />
+  <meta name="twitter:image" content="https://gradientv.com/images/brand/og-cover.png" />
+  <meta name="twitter:image:alt" content="GradientV" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,19 +38,33 @@
       padding: 2rem 1rem;
     }
 
+    .video-hero {
+      padding: 2rem 0 0;
+    }
+
+    .video-hero h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin: 2rem 0;
+    }
+
     .video-player {
       width: 100%;
       max-width: 900px;
       margin: 2rem auto;
-      background: #f5f5f5;
+      background: var(--surface-2);
       border-radius: 8px;
       overflow: hidden;
     }
 
+    /* aspect-ratio reserves the 16:9 box before the 1.9MB file loads, so the
+       page does not jump when metadata arrives (cumulative layout shift) */
     .video-player video {
       width: 100%;
       height: auto;
       display: block;
+      aspect-ratio: 16 / 9;
+      background: #000;
     }
 
     .video-info {
@@ -48,7 +81,7 @@
     .video-description {
       font-size: 1.1rem;
       line-height: 1.6;
-      color: #333;
+      color: var(--text);
       margin-bottom: 2rem;
     }
 
@@ -70,46 +103,26 @@
       margin-bottom: 0.75rem;
     }
 
-    .founding-members {
-      margin-bottom: 2rem;
-    }
-
-    .founding-members h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .founding-members p {
-      color: #666;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-info {
-      background: #f9f9f9;
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-top: 2rem;
-    }
-
-    .contact-info h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-    }
-
-    .contact-info p {
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .contact-info a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-
-    .contact-info a:hover {
-      text-decoration: underline;
-    }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "GradientV Introduction",
+    "description": "A short brand introduction to GradientV. The video has no narration; its content is conveyed visually and its only audio is instrumental music.",
+    "contentUrl": "https://gradientv.com/videos/introduction.mp4",
+    "encodingFormat": "video/mp4",
+    "duration": "PT11S",
+    "width": 3840,
+    "height": 2160,
+    "uploadDate": "2026-06-10",
+    "inLanguage": "en",
+    "publisher": {
+      "@id": "https://gradientv.com/#organization"
+    }
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -129,21 +142,23 @@
   </header>
 
   <main>
-    <section class="brand-banner" aria-label="GradientV Videos">
+    <section class="video-hero">
       <div class="container">
-        <h1 style="text-align: center; font-size: 2.5rem; margin: 2rem 0;">Videos</h1>
+        <h1>Videos</h1>
       </div>
     </section>
 
     <section class="video-container">
       <div class="video-player">
-        <video controls>
+        <video controls preload="metadata">
           <source src="./videos/introduction.mp4" type="video/mp4">
           <!--
-            Captions: create videos/introduction.vtt (WebVTT) with the real spoken
-            content. The track below displays it automatically once the file exists.
-            Until then, the "Video summary" below the player is the interim text
-            alternative for deaf and hard-of-hearing visitors (WAVE Task 1.6).
+            This video has no narration; its only audio is instrumental music.
+            introduction.vtt therefore carries a single music-identification cue
+            rather than a dialogue transcript. No "default" attribute here on
+            purpose — captions stay off until the viewer turns them on, since
+            pinning a music label on screen helps no one. If narration is ever
+            added, replace the cue in the .vtt with timed dialogue.
           -->
           <track kind="captions" srclang="en" label="English" src="./videos/introduction.vtt" />
           Your browser doesn't support HTML5 video. Please update your browser.
@@ -165,8 +180,9 @@
             internal assistants.
           </p>
           <p>
-            A full timed caption track (introduction.vtt) will be added so the complete
-            spoken content is available to everyone.
+            This video has no narration. Its only audio is an instrumental music
+            track, so nothing spoken is missed by watching it without sound.
+            Captions identifying the music are available through the player.
           </p>
         </div>
       </div>

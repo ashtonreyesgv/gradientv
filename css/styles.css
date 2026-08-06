@@ -69,12 +69,6 @@ img {
   gap: 1rem;
 }
 
-.brand-name {
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  font-size: 1.05rem;
-}
-
 .nav {
   display: flex;
   gap: 1.5rem;
@@ -171,34 +165,6 @@ p {
 
 .section {
   padding: 4rem 0;
-}
-
-.founder-grid {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 2.5rem;
-  align-items: center;
-}
-
-.founder-photo-wrap {
-  position: relative;
-}
-
-.founder-photo {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  background: var(--surface-2);
-}
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
-  margin-top: 2rem;
 }
 
 .card {
@@ -311,14 +277,6 @@ p {
   .contact-mark { width: 76px; top: 1.6rem; right: 1.6rem; }
   .contact-card h2 { max-width: 16ch; }
 
-  .founder-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .founder-photo-wrap {
-    max-width: 420px;
-  }
-
   .contact-details {
     grid-template-columns: 1fr;
   }
@@ -344,10 +302,6 @@ p {
     display: none;
   }
 
-  .card-grid {
-    grid-template-columns: 1fr;
-  }
-
   h1 {
     max-width: 12ch;
   }
@@ -368,11 +322,6 @@ p {
 }
 .gv-brand-stacked {
   height: 48px;
-  width: auto;
-  display: block;
-}
-.gv-brand-name {
-  height: 11px;
   width: auto;
   display: block;
 }
@@ -471,7 +420,6 @@ p {
   color: var(--bg);
 }
 
-
 .team-links {
   display: flex;
   flex-wrap: wrap;
@@ -509,14 +457,11 @@ p {
   fill: currentColor;
 }
 
-
 .site-header .header-inner { min-height: 76px; }
 
 @media (max-width: 800px) {
   .gv-brand-stacked { height: 40px; }
-  .gv-brand-name { height: 9px; }
 }
-
 
 /* ── Services grid (replaces the old Process cards) ──────────── */
 .service-grid {
@@ -588,32 +533,6 @@ p {
   .service-grid { grid-template-columns: 1fr; }
 }
 
-.sponsor-section {
-  padding: 2.5rem 0 3.5rem;
-}
-
-.sponsor-rail {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-  margin-top: 1.25rem;
-}
-
-.sponsor-logo {
-  width: auto;
-  height: 130px;
-  max-width: 340px;
-  object-fit: contain;
-  padding: 1.25rem 1.5rem;
-  transition: transform 180ms ease;
-}
-
-.sponsor-logo:hover {
-  transform: translateY(-2px);
-}
-
 .client-section {
   padding: 2.5rem 0 1rem;
 }
@@ -655,10 +574,6 @@ p {
   height: 170px;
   max-width: 340px;
   object-fit: contain;
-}
-
-.client-logo--bukas {
-  height: 190px;
 }
 
 .client-arrow {
@@ -706,15 +621,6 @@ p {
   .client-logo {
     height: 84px;
     max-width: 180px;
-  }
-
-  .sponsor-rail {
-    gap: 1rem;
-  }
-
-  .sponsor-logo {
-    height: 64px;
-    padding: 1rem 1.1rem;
   }
 
   .footer-inner {
