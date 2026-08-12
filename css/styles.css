@@ -576,6 +576,12 @@ p {
   object-fit: contain;
 }
 
+/* For tightly cropped, near-square marks that read larger than the wordmarks */
+.client-logo-sm {
+  height: 128px;
+  max-width: 240px;
+}
+
 .client-arrow {
   flex: 0 0 auto;
   display: inline-flex;
@@ -621,6 +627,11 @@ p {
   .client-logo {
     height: 84px;
     max-width: 180px;
+  }
+
+  .client-logo-sm {
+    height: 64px;
+    max-width: 130px;
   }
 
   .footer-inner {
