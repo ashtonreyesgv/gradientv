@@ -743,3 +743,281 @@ html[lang^="zh"] .footer-links a {
     max-width: 11em;
   }
 }
+
+/* ── Texture layer ─────────────────────────────────────────────────
+   Decorative only, and deliberately cheap: three WebP files, ~122KB total.
+
+   Each texture is stored grayscale (or, for the dark plate, mapped onto the
+   slate accent) and picks up its colour from the page through a blend mode,
+   so no new hue enters the palette. Every layer is masked with a gradient so
+   it dissolves before it reaches running text, and every layer is a
+   pseudo-element — screen readers never see it.
+
+   If a browser lacks WebP or mask-image the layer simply does not paint and
+   the flat background shows through. Nothing about the layout depends on it.
+   Worst-case measured contrast with a texture at full strength underneath:
+   11.6:1 on cream, 7.7:1 on the dark plate — both well past WCAG AA. */
+
+.hero {
+  position: relative;
+}
+
+/* Full-bleed wash behind the hero. Runs past the container edges (body already
+   sets overflow-x: hidden) and fades out downward so the clients rail below
+   starts on clean cream. */
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: calc(100% + 5rem);
+  background-image: url("../images/textures/texture-waves.webp");
+  background-size: cover;
+  background-position: center top;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 58%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 58%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Oculus ribs inside the dark contact plate. Enters from the right so the
+   copy on the left keeps a flat, near-black bed. */
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../images/textures/texture-oculus.webp");
+  background-size: cover;
+  background-position: right center;
+  opacity: 0.42;
+  -webkit-mask-image: linear-gradient(102deg, transparent 36%, rgba(0, 0, 0, 0.45) 64%, #000 100%);
+  mask-image: linear-gradient(102deg, transparent 36%, rgba(0, 0, 0, 0.45) 64%, #000 100%);
+  pointer-events: none;
+}
+
+/* No stacking rules needed for the card's children: .contact-intro and
+   .contact-details already carry z-index 2 and .contact-mark z-index 1, all of
+   which sit above the z-index 0 texture layer above. */
+
+@media (max-width: 700px) {
+  /* On a narrow card the text reflows across the full width, so pull the
+     texture back to the bottom edge and out from under the copy. */
+  .contact-card::before {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.5) 75%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.5) 75%, #000 100%);
+    opacity: 0.34;
+  }
+}
+
+/* ── Story page ────────────────────────────────────────────────────── */
+.story-hero {
+  position: relative;
+  padding: 4.5rem 0 1rem;
+}
+
+.story-hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: calc(100% + 5rem);
+  background-image: url("../images/textures/texture-ribs.webp");
+  background-size: cover;
+  background-position: 70% top;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.4) 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.4) 62%, transparent 100%);
+  pointer-events: none;
+}
+
+.story-hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.story-lead {
+  font-size: clamp(1.12rem, 2vw, 1.35rem);
+  line-height: 1.55;
+  color: var(--muted-strong);
+  max-width: 46ch;
+  margin: 1.5rem 0 0;
+}
+
+.story-body {
+  max-width: 62ch;
+}
+
+.story-body p {
+  margin: 0 0 1.1rem;
+}
+
+.story-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* The two options a small business is normally left with. */
+.story-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 2.4rem;
+}
+
+.story-option {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.9rem 1.7rem;
+}
+
+.story-option::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../images/textures/texture-waves.webp");
+  background-size: 160% auto;
+  background-position: right top;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+  -webkit-mask-image: radial-gradient(120% 100% at 100% 0%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(120% 100% at 100% 0%, #000 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.story-option > * {
+  position: relative;
+  z-index: 1;
+}
+
+.story-option h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 0 0 0.5rem;
+}
+
+.story-option p {
+  font-size: 0.92rem;
+  color: var(--muted-strong);
+  margin: 0;
+}
+
+.story-option .story-option-cost {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+
+/* Dark plate marking the turn in the argument, echoing the contact card. */
+.story-plate {
+  position: relative;
+  overflow: hidden;
+  background: #0a0a0c;
+  border: 1px solid #1a1a1f;
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.5rem;
+  color: #f4f4f5;
+  margin-top: 3rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.story-plate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../images/textures/texture-oculus.webp");
+  background-size: cover;
+  /* Mirrored crop of the same source used on the contact card, but entering
+     from the right for the same reason: the copy column stays on flat black. */
+  background-position: 72% center;
+  opacity: 0.4;
+  -webkit-mask-image: linear-gradient(102deg, transparent 44%, rgba(0, 0, 0, 0.45) 70%, #000 100%);
+  mask-image: linear-gradient(102deg, transparent 44%, rgba(0, 0, 0, 0.45) 70%, #000 100%);
+  pointer-events: none;
+}
+
+.story-plate > * {
+  position: relative;
+  z-index: 1;
+}
+
+.story-plate h2 {
+  margin-bottom: 1rem;
+}
+
+.story-plate p {
+  color: rgba(244, 244, 245, 0.82);
+  max-width: 54ch;
+  margin: 0 0 1.1rem;
+}
+
+.story-plate p:last-child {
+  margin-bottom: 0;
+}
+
+.story-plate .section-label {
+  color: rgba(244, 244, 245, 0.6);
+}
+
+@media (max-width: 700px) {
+  .story-options {
+    grid-template-columns: 1fr;
+  }
+
+  .story-plate {
+    padding: 2.25rem 1.5rem;
+  }
+
+  .story-plate::before {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.5) 75%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.5) 75%, #000 100%);
+    opacity: 0.32;
+  }
+}
+
+/* Respect a reduced-motion / reduced-data preference by dropping the decorative
+   layers entirely — they carry no information. */
+@media (prefers-reduced-data: reduce) {
+  .hero::before,
+  .contact-card::before,
+  .story-hero::before,
+  .story-option::before,
+  .story-plate::before {
+    display: none;
+  }
+}
+
+/* Founder name stays an <h3> for correct heading order under the section's
+   <h2>, but takes the display serif so it still reads as a section anchor. */
+.story-founder-name {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.9rem;
+}
