@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Team - GradientV</title>
 
+  <!-- Hidden for now, not deleted. The page still exists and still works at
+       its direct URL, but it is kept out of search results, out of the site
+       nav, and out of sitemap.xml. To unhide: drop this robots tag, restore
+       the commented-out nav link in every page header, and add the URL back
+       to sitemap.xml. -->
+  <meta name="robots" content="noindex, nofollow" />
+
   <meta name="description" content="Meet the team behind GradientV, an AI consulting studio based in New York City and Stony Brook, New York." />
 
   <link rel="canonical" href="https://gradientv.com/team.html" />
@@ -43,6 +50,7 @@
       "@type": "Organization",
       "@id": "https://gradientv.com/#organization",
       "name": "GradientV",
+      "legalName": "GradientV LLC",
       "url": "https://gradientv.com/",
       "employee": [
         {
@@ -90,10 +98,15 @@
     <div class="container header-inner">
       <nav class="nav">
         <a href="index.html#clients">Clients</a>
-        <a href="index.html#services">Services</a>
+        <!-- Team tab hidden, not removed. team.html still exists and is set to
+             noindex; delete this comment wrapper to bring the tab back.
         <a href="team.html">Team</a>
+        -->
         <a href="contact.html">Contact</a>
+        <!-- Videos tab hidden, not removed. videos.html still exists and is set
+             to noindex; delete this comment wrapper to bring the tab back.
         <a href="videos.html">Videos</a>
+        -->
       </nav>
 
       <a href="index.html" class="gv-brand-lockup" aria-label="GradientV">
@@ -234,7 +247,7 @@
         <a href="terms.html">Terms of Service</a>
         <a href="accessibility.html">Accessibility</a>
       </nav>
-      <p class="footer-copy">&copy; 2026 GradientV. All rights reserved.</p>
+      <p class="footer-copy">&copy; 2026 GradientV LLC. All rights reserved.</p>
     </div>
 
     <div class="footer-langs-bar">
