@@ -327,10 +327,37 @@ p {
 }
 
 .site-footer {
+  position: relative;
+  overflow: hidden;
   margin-top: 5rem;
   background: #15110e;
   color: #f4f1ea;
   border-top: 1px solid var(--line);
+}
+
+/* Soft wave field washing in from the left, behind the brand lockup, mapped
+   onto the footer's warm black. It clears well before the legal links and the
+   copyright notice, so nothing in the footer sits on patterned ground. The
+   asset is cut to the band's proportions so `cover` never magnifies it into
+   coarse slabs. */
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("../images/textures/texture-footer.webp");
+  background-size: cover;
+  background-position: left center;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.42) 30%, transparent 58%);
+  mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.42) 30%, transparent 58%);
+  pointer-events: none;
+}
+
+.footer-inner,
+.footer-langs-bar {
+  position: relative;
+  z-index: 1;
 }
 .footer-inner {
   display: flex;
@@ -892,13 +919,25 @@ html[lang^="zh"] .footer-links a {
   inset: 0;
   z-index: 0;
   background-image: url("../images/textures/texture-waves.webp");
-  background-size: 160% auto;
-  background-position: right top;
+  background-size: cover;
+  background-position: right center;
   mix-blend-mode: multiply;
-  opacity: 0.7;
-  -webkit-mask-image: radial-gradient(120% 100% at 100% 0%, #000 0%, transparent 70%);
-  mask-image: radial-gradient(120% 100% at 100% 0%, #000 0%, transparent 70%);
+  opacity: 1;
+  /* Sweeps across the whole card from the top-right and thins out toward the
+     lower-left where the paragraph sits. Full strength is safe here: the texture
+     bottoms out at luma 187, so on the card's near-white surface the darkest it
+     can push the background is ~#b9b7b4 — still ~10:1 against body text. */
+  -webkit-mask-image: linear-gradient(216deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
+  mask-image: linear-gradient(216deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
   pointer-events: none;
+}
+
+/* Alternate the crop so the two cards do not look like duplicates. */
+.story-option:nth-child(2)::before {
+  background-image: url("../images/textures/texture-ribs.webp");
+  background-position: left center;
+  -webkit-mask-image: linear-gradient(144deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
+  mask-image: linear-gradient(144deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
 }
 
 .story-option > * {
@@ -1003,6 +1042,7 @@ html[lang^="zh"] .footer-links a {
    layers entirely — they carry no information. */
 @media (prefers-reduced-data: reduce) {
   .hero::before,
+  .site-footer::before,
   .contact-card::before,
   .story-hero::before,
   .story-option::before,
