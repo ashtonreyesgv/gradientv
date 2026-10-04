@@ -1,0 +1,283 @@
+/* GradientV's look, all in one place
+   Tailwind v4 gets set up right here in @theme (there's no tailwind.config.js).
+   every --color-x below turns into bg-x, text-x, border-x...
+
+   warm paper + near-black ink, like the logo. the only color is one slate blue,
+   pulled from the oculus texture, and it's saved for focus rings and small accents.
+   the personality comes from the type, the textures and the slanted dark bands */
+
+@import "tailwindcss";
+
+@theme {
+    /* ----- paper (the light surfaces) ----- */
+    --color-paper: #f5f1ea;         /* the page */
+    --color-paper-bright: #fdfbf7;  /* cards that sit on the page */
+    --color-paper-dim: #ebe5da;     /* hover fills */
+    --color-line: #d8d1c7;          /* borders and dividers */
+
+    /* ----- ink (text on paper) ----- */
+    --color-ink: #1f1a17;           /* main text */
+    --color-ink-soft: #44403a;      /* secondary text and small labels, about 9:1 on paper */
+    --color-ink-mute: #6f6a63;      /* big quiet text only, about 4.9:1 on paper */
+
+    /* ----- night (the dark bands and the footer) ----- */
+    --color-night: #0a0a0c;
+    --color-night-warm: #15110e;
+    --color-chalk: #f4f4f5;         /* text on night */
+
+    /* ----- the one accent ----- */
+    --color-accent: #234b63;
+
+    /* both fonts are bundled with the app (npm packages, no Google request),
+       so they look the same everywhere and the site makes no third-party calls */
+    --font-display: "Funnel Display Variable", "Segoe UI", system-ui, sans-serif;
+    --font-sans: "Funnel Sans Variable", "Segoe UI", system-ui, sans-serif;
+}
+
+/* the page container: a centered column with a gutter on small screens */
+@utility wrap {
+    width: min(100% - 2.5rem, 73rem);
+    margin-inline: auto;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem; /* so #clients doesn't land under the sticky header */
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: clip; /* the textures run past the edges on purpose */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* one focus ring for everything you can tab to */
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.on-night :focus-visible {
+    outline-color: var(--color-chalk);
+}
+
+/* ---------- headlines ----------
+   the sizes live here instead of in the JSX so the Chinese pages can step
+   them down in one place (see the bottom of this file) */
+.display-xl,
+.display-lg,
+.display-md {
+    font-family: var(--font-display);
+    text-wrap: balance;
+}
+
+.display-xl {
+    font-size: clamp(2.6rem, 7.2vw, 5.5rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+}
+
+.display-lg {
+    font-size: clamp(2.05rem, 4.4vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+}
+
+.display-md {
+    font-size: clamp(1.5rem, 2.6vw, 2.05rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+/* ---------- the slant ----------
+   dark bands start on a diagonal instead of a straight edge, echoing the V */
+.slope-top {
+    clip-path: polygon(0 0, 100% clamp(1.75rem, 5.5vw, 5rem), 100% 100%, 0 100%);
+}
+
+/* ---------- textures ----------
+   decorative only. each one is a grey image that picks up the page color
+   through a blend mode, and a mask fades it out before it reaches running text.
+   they are plain <div aria-hidden>, so screen readers never see them.
+   if a browser can't do masks the flat color shows instead, nothing breaks */
+.tx {
+    position: absolute;
+    pointer-events: none;
+    background-size: cover;
+}
+
+/* soft waves behind the top of a page. starts above the section so it also
+   sits under the see-through header */
+.tx-waves {
+    inset: -5rem 0 0 0;
+    background-image: url("/images/textures/texture-waves.webp");
+    background-position: center top;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 58%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 58%, transparent 100%);
+}
+
+.tx-ribs {
+    inset: -5rem 0 0 0;
+    background-image: url("/images/textures/texture-ribs.webp");
+    background-position: 70% top;
+    mix-blend-mode: multiply;
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.4) 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.4) 62%, transparent 100%);
+}
+
+/* the blue ribs inside a dark band. comes in from the right so the text on
+   the left keeps a flat, near-black bed */
+.tx-oculus {
+    inset: 0;
+    background-image: url("/images/textures/texture-oculus.webp");
+    background-position: right center;
+    opacity: 0.42;
+    -webkit-mask-image: linear-gradient(102deg, transparent 38%, rgba(0, 0, 0, 0.45) 66%, #000 100%);
+    mask-image: linear-gradient(102deg, transparent 38%, rgba(0, 0, 0, 0.45) 66%, #000 100%);
+}
+
+/* a corner of waves on a light card. the second card flips it so two cards
+   side by side don't look like copies */
+.tx-card {
+    inset: 0;
+    background-image: url("/images/textures/texture-waves.webp");
+    background-position: right center;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: linear-gradient(216deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
+    mask-image: linear-gradient(216deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
+}
+
+.tx-card-flip {
+    background-image: url("/images/textures/texture-ribs.webp");
+    background-position: left center;
+    -webkit-mask-image: linear-gradient(144deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
+    mask-image: linear-gradient(144deg, #000 0%, rgba(0, 0, 0, 0.55) 42%, rgba(0, 0, 0, 0.12) 74%, transparent 100%);
+}
+
+/* waves washing in from the left of the footer, gone before the links */
+.tx-footer {
+    inset: 0;
+    background-image: url("/images/textures/texture-footer.webp");
+    background-position: left center;
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.42) 30%, transparent 58%);
+    mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.42) 30%, transparent 58%);
+}
+
+@media (max-width: 700px) {
+    /* on a phone the text runs the full width of a dark band, so the ribs
+       move to the bottom edge and out from under it */
+    .tx-oculus {
+        opacity: 0.32;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 78%, #000 100%);
+        mask-image: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 78%, #000 100%);
+    }
+}
+
+@media (prefers-reduced-data: reduce) {
+    .tx {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ---------- legal pages ----------
+   privacy, terms and accessibility are long plain documents (src/content/legal),
+   so their text is styled from here instead of with a class on every paragraph */
+.legal h2 {
+    margin: 2.75rem 0 0.85rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.legal h3 {
+    margin: 1.75rem 0 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.legal p,
+.legal li {
+    max-width: 68ch;
+    line-height: 1.7;
+}
+
+.legal p {
+    margin: 0 0 1rem;
+}
+
+.legal ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.2rem;
+    list-style: disc;
+}
+
+.legal li {
+    margin-bottom: 0.4rem;
+}
+
+.legal a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.legal a:hover {
+    color: var(--color-accent);
+}
+
+/* ---------- Simplified Chinese (/zh) ----------
+   Funnel has no Chinese characters, so the browser would fall back to whatever
+   it likes. hand it the reader's own system Chinese font instead of downloading
+   a multi-megabyte one */
+html:lang(zh) {
+    --font-display: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
+    --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
+}
+
+/* Latin headlines are set tight and huge. Chinese characters are denser, so
+   they need normal spacing and a step down in size to carry the same weight */
+html:lang(zh) .display-xl {
+    font-size: clamp(2.1rem, 5.4vw, 4rem);
+    line-height: 1.2;
+    letter-spacing: 0;
+}
+
+html:lang(zh) .display-lg {
+    font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+    line-height: 1.25;
+    letter-spacing: 0;
+}
+
+html:lang(zh) .display-md {
+    line-height: 1.3;
+    letter-spacing: 0;
+}
+
+/* uppercase does nothing to Chinese, but the wide Latin letter spacing does */
+html:lang(zh) .eyebrow {
+    letter-spacing: 0.06em;
+}

@@ -16,3 +16,8 @@
 # OS junk
 .DS_Store
 Thumbs.db
+
+# Node + the Vite build output (Vercel builds these itself)
+node_modules/
+dist/
+dist-server/

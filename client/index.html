@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/images/icons/logo_light.ico" />
+
+    <!-- the title, description, social tags and the rest are different on every page,
+         so they aren't written here. each view renders a <Seo />, and
+         scripts/prerender.js writes the result into this spot at build time -->
+    <!--page-head-->
+</head>
+
+<body>
+    <!-- React draws everything in this div. on Vercel it already arrives filled in
+         (scripts/prerender.js), so search engines and link previews see real HTML -->
+    <div id="root"><!--page-body--></div>
+
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Vercel Web Analytics: first-party route, so no external host and no cookies.
+         this file only exists on Vercel, so a 404 for it on localhost is expected -->
+    <script defer src="/_vercel/insights/script.js" vite-ignore></script>
+</body>
+
+</html>
