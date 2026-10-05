@@ -8,8 +8,9 @@ Vite runs and builds the app.
 Express + MongoDB for the server, in `server/` next to `client/`, same layout as the CRIZM dashboard.
 Vercel hosts both.
 
-the portal so far: a client can set a password from an invite link, sign in, and sign out.
-what they see inside (the request box and their site stats) is what gets built next.
+the portal so far: a client sets a password from an invite link, signs in, and can send
+requests for changes to their site. i sign in with an admin login and see everyone's
+requests in one list. their site stats are what gets built next.
 
 ---
 
@@ -36,6 +37,17 @@ npm run add-client -- "Bukas Cafe" owner@bukascafe.com bukascafe
 it prints a link. whoever opens it picks their own password and lands in the portal.
 the link works once and dies after 7 days. run the same command again for a fresh one,
 which is also the fix for a forgotten password.
+
+the last word is their site's project name on Vercel (for the stats page). leave it off for
+a login with no site. add `--admin` to make my own login, the one that sees every client's requests:
+
+```
+npm run add-client -- "GradientV" me@example.com --admin
+```
+
+to get a Slack message when a client sends a request, make an Incoming Webhook at
+api.slack.com/apps and put its address after `SLACK_WEBHOOK_URL=` in `server/.env`
+(and in Vercel's environment variables). without it the request box works the same.
 
 to see exactly what Vercel will serve (the pages, not the server):
 
@@ -95,10 +107,11 @@ server/
     server.js                   starts the server on my laptop
     app.js                      builds the Express app: the middleware chain and the routes
     db.js                       the one MongoDB connection
-    models/                     Account (a business and its login), Session (a signed-in browser)
+    models/                     Account (a business and its login), Session (a signed-in browser),
+                                ChangeRequest (one thing a client asked for)
     routes/                     which function answers which URL
     controllers/                those functions
-    services/                   passwords, sessions, invites: the logic the controllers lean on
+    services/                   passwords, sessions, invites, the Slack message: what the controllers lean on
     dto/                        what gets sent to the browser (never the password hash)
     middleware/                 requireAuth, requireDatabase, the request logger, errors into JSON
 client/
@@ -119,6 +132,7 @@ client/
     context/AuthContext.jsx     who is signed in (it asks the server)
     api/api.js                  the one place the client talks to the server
     components/                 the pieces: Header, Footer, ContactBand, Person...
+    components/portal/          the pieces behind the login: RequestBox (a client's), RequestInbox (mine)
     views/                      one file per page
 legacy/                         the old HTML site, kept for reference. not deployed
 design/stock/                   the original photos the textures were cut from. not deployed
@@ -150,7 +164,7 @@ changes to their site, and their site's visitors and page views.
 
 1. ~~the skeleton: `server/`, MongoDB, `/api/health`, the Vercel wiring~~ done
 2. ~~login: invite links, passwords, sessions, the first page behind the login~~ done
-3. the request box
+3. ~~the request box, and the admin login that sees everyone's requests~~ done
 4. the stats page, pulled from Vercel Web Analytics (`npm run check-analytics -- bukascafe`
    proved the API works on the Hobby plan)
 5. later: an admin page, saving daily numbers (Hobby only keeps a month), and fields clients can edit themselves

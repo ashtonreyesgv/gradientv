@@ -1,12 +1,13 @@
-// the first page behind the login: who is signed in, a way out, and the two
-// things the portal is for. requests and stats are only described here so far,
-// each one gets built into its own card
+// the page behind the login: who is signed in, a way out, and the two things
+// the portal is for. the request box works. stats is only described so far
 //
 // the real protection is on the server (requireAuth). this page just doesn't
 // bother drawing itself for someone who isn't signed in, it sends them to the form
 import { useState } from 'react';
 import { Navigate } from 'react-router';
 import Seo from '../components/Seo.jsx';
+import RequestBox from '../components/portal/RequestBox.jsx';
+import RequestInbox from '../components/portal/RequestInbox.jsx';
 import { BUTTON_STYLES } from '../components/ui/ButtonLink.jsx';
 import Eyebrow from '../components/ui/Eyebrow.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -61,16 +62,20 @@ export default function PortalView() {
                                 </button>
                             </div>
 
-                            <div className="mt-10 grid gap-5 md:grid-cols-2">
-                                <section className={CARD_CLASS}>
-                                    <h2 className="display-md">{words.requests.heading}</h2>
-                                    <p className="mt-3 text-ink-soft">{words.requests.soon}</p>
-                                </section>
-                                <section className={CARD_CLASS}>
-                                    <h2 className="display-md">{words.stats.heading}</h2>
-                                    <p className="mt-3 text-ink-soft">{words.stats.soon}</p>
-                                </section>
-                            </div>
+                            {/* i get every client's requests. a client gets their own box, and their stats next to it */}
+                            {account.role === 'admin' ? (
+                                <div className="mt-10">
+                                    <RequestInbox />
+                                </div>
+                            ) : (
+                                <div className="mt-10 grid items-start gap-5 md:grid-cols-2">
+                                    <RequestBox />
+                                    <section className={CARD_CLASS}>
+                                        <h2 className="display-md">{words.stats.heading}</h2>
+                                        <p className="mt-3 text-ink-soft">{words.stats.soon}</p>
+                                    </section>
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

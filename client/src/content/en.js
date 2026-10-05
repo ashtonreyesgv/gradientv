@@ -211,11 +211,29 @@ export default {
         signingOut: 'Signing out…',
         requests: {
             heading: 'Requests',
-            soon: 'Ask for a change to your site and see where each request stands. This is being built next.'
+            intro: 'Tell us what you would like changed on your site.',
+            label: 'What would you like changed?',
+            placeholder: 'For example: we close at 9pm on Fridays now.',
+            submit: 'Send request',
+            sending: 'Sending…',
+            sent: 'Sent. We will take a look.',
+            loading: 'Loading requests…',
+            listHeading: 'What you have sent',
+            empty: 'Nothing sent yet.',
+            // the keys are the statuses the server uses (server/src/models/ChangeRequest.js)
+            status: {
+                'new': 'New',
+                'in progress': 'In progress',
+                'done': 'Done'
+            },
+            // what the admin login sees instead of the box
+            inboxHeading: 'Requests from clients',
+            inboxEmpty: 'No requests yet.',
+            statusLabel: 'Status'
         },
         stats: {
             heading: 'Site stats',
-            soon: 'Visitors and page views for your site. This comes right after requests.'
+            soon: 'Visitors and page views for your site. This is being built next.'
         }
     },
 

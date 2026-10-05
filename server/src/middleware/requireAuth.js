@@ -16,3 +16,9 @@ export async function requireAuth(req, res, next) {
     req.account = account;
     next();
 }
+
+/** goes after requireAuth, on the routes only i may use. a client gets a 403: signed in, but not allowed */
+export function requireAdmin(req, res, next) {
+    if (req.account.role !== 'admin') throw new HttpError(403, 'Only GradientV can do that.');
+    next();
+}

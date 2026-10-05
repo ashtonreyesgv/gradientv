@@ -69,3 +69,20 @@ export function getInvite(token) {
 export function setPassword(token, password) {
     return send('POST', '/api/auth/set-password', { token, password });
 }
+
+// ---------- the request box ----------
+
+/** @return {Promise<Object[]>} newest first. a client gets their own, the admin gets everyone's */
+export function listRequests() {
+    return send('GET', '/api/requests');
+}
+
+/** @return {Promise<Object>} the request that was just made */
+export function createRequest(message) {
+    return send('POST', '/api/requests', { message });
+}
+
+/** admin only. @return {Promise<Object>} the request with its new status */
+export function setRequestStatus(id, status) {
+    return send('PATCH', `/api/requests/${id}`, { status });
+}

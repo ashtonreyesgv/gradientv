@@ -24,6 +24,13 @@ export function errorHandler(error, req, res, next) {
     if (error.type === 'entity.parse.failed') {
         // express.json() couldn't read the body
         message = 'That request body is not valid JSON.';
+    } else if (error.name === 'ValidationError') {
+        // mongoose refused to save it (something missing, or too long)
+        status = 400;
+    } else if (error.name === 'CastError') {
+        // an id that isn't even shaped like a Mongo id can't name anything
+        status = 404;
+        message = 'There is nothing with that id.';
     }
 
     if (status >= 500) {

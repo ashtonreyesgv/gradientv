@@ -9,6 +9,7 @@
 //   cookieParser     -> the Cookie header becomes req.cookies
 //   /api/health      -> is the server up, is the database up
 //   /api/auth/...    -> signing in and out (requireDatabase goes first)
+//   /api/requests    -> the request box (requireDatabase, then requireAuth, go first)
 //   notFound         -> only reached if nothing above answered
 //   errorHandler     -> reached whenever anything above threw
 import cookieParser from 'cookie-parser';
@@ -16,8 +17,10 @@ import express from 'express';
 import { connectDatabase, databaseIsUp } from './db.js';
 import { errorHandler, notFound } from './middleware/errorHandlers.js';
 import { requestLogger } from './middleware/requestLogger.js';
+import { requireAuth } from './middleware/requireAuth.js';
 import { requireDatabase } from './middleware/requireDatabase.js';
 import authRoutes from './routes/authRoutes.js';
+import requestRoutes from './routes/requestRoutes.js';
 
 export function createApp({ logRequests = true } = {}) {
     const app = express();
@@ -38,6 +41,7 @@ export function createApp({ logRequests = true } = {}) {
         res.json({ ok: true, database: databaseIsUp() });
     });
     app.use('/api/auth', requireDatabase, authRoutes);
+    app.use('/api/requests', requireDatabase, requireAuth, requestRoutes);
 
     app.use(notFound);
     app.use(errorHandler);
