@@ -45,6 +45,15 @@ a login with no site. add `--admin` to make my own login, the one that sees ever
 npm run add-client -- "GradientV" me@example.com --admin
 ```
 
+all of that makes logins in the database on my laptop, for testing. for a real one, add `--live`:
+
+```
+npm run add-client -- "Bukas Cafe" owner@bukascafe.com bukascafe --live
+```
+
+`--live` reads `server/.env.production` in place of `server/.env`: the Atlas address (`MONGODB_URI`)
+and the real site's address (`SITE_URL`). it says which database it used before it prints the link.
+
 to get a Slack message when a client sends a request, make an Incoming Webhook at
 api.slack.com/apps and put its address after `SLACK_WEBHOOK_URL=` in `server/.env`
 (and in Vercel's environment variables). without it the request box works the same.
