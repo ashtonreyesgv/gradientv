@@ -1,28 +1,33 @@
 # gradientv.com
 
-the GradientV website. it used to be hand-written HTML pages, now it's a React app.
+the GradientV website, plus the start of the client portal.
 
 React 19 + Tailwind v4 for the frontend, all in `.jsx`.
 React Router handles the pages.
 Vite runs and builds the app.
-Vercel hosts it.
+Express + MongoDB for the server, in `server/` next to `client/`, same layout as the CRIZM dashboard.
+Vercel hosts both.
 
-there is no backend yet. the Client login page is just the form for now.
-when the client portal gets built, Express + MongoDB go in a `server/` folder next to `client/`,
-same layout as the CRIZM dashboard.
+the server is only a skeleton so far: it starts, connects to MongoDB and answers `/api/health`.
+login and the portal pages aren't built yet, so the Client login page is still just the form.
 
 ---
 
 ## to run it
 
-you need Node 20.19+.
+you need Node 20.19+ and MongoDB running.
 
 ```
 npm install        # only once
-npm run dev        # Vite on http://localhost:5173
+npm run dev        # Express on http://localhost:4000 and Vite on http://localhost:5173
 ```
 
-to see exactly what Vercel will serve:
+the server reads its settings from `server/.env`. copy `server/.env.example` to make one.
+
+is it alive? open http://localhost:5173/api/health and you get `{"ok":true,"database":true}`.
+`database` is `false` when the server is up but can't reach MongoDB.
+
+to see exactly what Vercel will serve (the pages, not the server):
 
 ```
 npm run build      # makes client/dist
@@ -39,6 +44,14 @@ nothing to set up in the Vercel dashboard, `vercel.json` tells it everything:
 - `outputDirectory` is `client/dist`
 - `cleanUrls` makes `/story` work and sends the old `/story.html` links to it, so nothing that was shared before breaks
 - `headers` are the same security headers the old site had
+- `rewrites` sends every `/api/...` request to `api/index.js`, which is the Express app
+
+the server rides along with the site. Vercel turns `api/index.js` into a function and runs the
+Express app inside it, so one push ships both, and they share a domain: the browser only ever
+talks to gradientv.com, same idea as the Vite proxy, and no CORS setup is needed.
+
+the settings the server needs (`MONGODB_URI`, `VERCEL_TOKEN`, `VERCEL_TEAM`) go in Vercel under
+Project Settings > Environment Variables. `server/.env` is only for my laptop and never gets committed.
 
 `npm run build` does three things in a row:
 
@@ -63,6 +76,15 @@ every branch, so you can click through it before it touches the real site, then 
 
 ```
 vercel.json                     how Vercel builds and serves the site
+api/index.js                    the door Vercel uses to reach the server
+server/
+  .env.example                  the settings the server needs. copy it to .env
+  scripts/check-analytics.js    asks Vercel for a site's page views, to check the API works
+  src/
+    server.js                   starts the server on my laptop
+    app.js                      builds the Express app: the middleware chain and the routes
+    db.js                       the one MongoDB connection
+    middleware/                 the request logger, and where errors turn into JSON
 client/
   index.html                    the page shell
   public/                       images, videos, robots.txt, sitemap.xml (served as-is)
@@ -106,12 +128,18 @@ one entry in `VIEWS` (`client/src/App.jsx`), and a line in `client/public/sitema
 
 ## what's next
 
-client portal: right now `api.signIn()` in `client/src/api/api.js` answers "not open yet" by itself
-and nothing leaves the browser. when the server exists:
+the client portal. one login per business, and each client sees two things: a box to request
+changes to their site, and their site's visitors and page views.
 
-1. build it in `server/` (Express + MongoDB) and add `"server"` to `workspaces` in the root `package.json`
-2. flip `SERVER_IS_LIVE` in `api.js`
-3. Vercel only hosts the React app, so the server runs somewhere else. add a rewrite to `vercel.json`
-   that passes `/api/*` along to it. the browser then only ever talks to gradientv.com, same idea
-   as the Vite proxy in the dashboard, and no CORS setup is needed
-4. add the portal pages as views, behind the login
+1. ~~the skeleton: `server/`, MongoDB, `/api/health`, the Vercel wiring~~ done
+2. login. i make the accounts with a script that prints a one-time link for the client to set
+   their password. sessions live in MongoDB, the browser only holds a cookie. then flip
+   `SERVER_IS_LIVE` in `client/src/api/api.js` (until then `api.signIn()` answers "not open yet"
+   by itself and nothing leaves the browser)
+3. the request box
+4. the stats page, pulled from Vercel Web Analytics. check the API works on the plan first:
+   put a token in `server/.env`, then `npm run check-analytics -- bukascafe`
+5. later: an admin page, saving daily numbers (Hobby only keeps a month), and fields clients can edit themselves
+
+two things to do before a real client logs in: move MongoDB to Atlas (set `MONGODB_URI` on Vercel),
+and move the Vercel account to Pro, since the free plan is for non-commercial projects.

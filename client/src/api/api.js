@@ -2,9 +2,9 @@
 // the components never touch fetch, URLs or status codes. they call
 // api.signIn(email, password) and get data back, or an ApiError with a readable message.
 //
-// right now there is no server: the site is only this React app on Vercel.
+// the server exists now (server/), but it can't log anyone in yet.
 // so signIn() answers "not open yet" by itself and nothing leaves the browser.
-// when the Express + MongoDB server exists, flip SERVER_IS_LIVE and this is
+// when login is built, flip SERVER_IS_LIVE and this is
 // the only file in the client that has to change
 
 // just a custom error type. the extra field status holds the server's response code
@@ -16,7 +16,7 @@ export class ApiError extends Error {
     }
 }
 
-/** the day the server is deployed, this becomes true */
+/** the day the server can log people in, this becomes true */
 const SERVER_IS_LIVE = false;
 
 /** the status the server will use for "the portal isn't open", so LoginView can tell it apart from a wrong password */

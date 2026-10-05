@@ -1,18 +1,23 @@
 {
     "name": "gradientv-site",
     "version": "2.0.0",
-    "description": "gradientv.com. React + Tailwind client today, an Express + MongoDB server for the client portal later.",
+    "description": "gradientv.com. React + Tailwind client, and an Express + MongoDB server for the client portal.",
     "private": true,
     "type": "module",
     "engines": {
         "node": ">=20.19.0"
     },
     "workspaces": [
-        "client"
+        "client",
+        "server"
     ],
     "scripts": {
-        "dev": "npm run dev -w client",
+        "dev": "concurrently --names server,client --prefix-colors blue,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
         "build": "npm run build -w client",
-        "preview": "npm run preview -w client"
+        "preview": "npm run preview -w client",
+        "check-analytics": "npm run check-analytics -w server --"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
     }
 }
