@@ -9,13 +9,25 @@ import mongoose from 'mongoose';
 
 let connecting = null;
 
+// an Atlas address usually stops at ".mongodb.net/?..." without naming a database, and then
+// Mongoose quietly puts everything in one called "test". so when the address doesn't name one, this does.
+// (my local address ends in /gradientv, which already names it)
+const DEFAULT_DATABASE = 'gradientv';
+
+function namesADatabase(uri) {
+    return /^mongodb(\+srv)?:\/\/[^/]+\/[^?]+/.test(uri);
+}
+
 /** connects the first time it's called. after that it hands back the same connection */
 export function connectDatabase() {
     const uri = process.env.MONGODB_URI;
     if (!uri) return Promise.reject(new Error('MONGODB_URI is not set.'));
 
     if (!connecting) {
-        connecting = mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 }).catch((error) => {
+        const options = { serverSelectionTimeoutMS: 5000 };
+        if (!namesADatabase(uri)) options.dbName = DEFAULT_DATABASE;
+
+        connecting = mongoose.connect(uri, options).catch((error) => {
             // forget the failed try, so the next request gets a fresh one
             connecting = null;
             throw error;
