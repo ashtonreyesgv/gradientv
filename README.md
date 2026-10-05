@@ -8,8 +8,8 @@ Vite runs and builds the app.
 Express + MongoDB for the server, in `server/` next to `client/`, same layout as the CRIZM dashboard.
 Vercel hosts both.
 
-the server is only a skeleton so far: it starts, connects to MongoDB and answers `/api/health`.
-login and the portal pages aren't built yet, so the Client login page is still just the form.
+the portal so far: a client can set a password from an invite link, sign in, and sign out.
+what they see inside (the request box and their site stats) is what gets built next.
 
 ---
 
@@ -26,6 +26,16 @@ the server reads its settings from `server/.env`. copy `server/.env.example` to 
 
 is it alive? open http://localhost:5173/api/health and you get `{"ok":true,"database":true}`.
 `database` is `false` when the server is up but can't reach MongoDB.
+
+to make a login (for a client, or a test one for me):
+
+```
+npm run add-client -- "Bukas Cafe" owner@bukascafe.com bukascafe
+```
+
+it prints a link. whoever opens it picks their own password and lands in the portal.
+the link works once and dies after 7 days. run the same command again for a fresh one,
+which is also the fix for a forgotten password.
 
 to see exactly what Vercel will serve (the pages, not the server):
 
@@ -79,12 +89,18 @@ vercel.json                     how Vercel builds and serves the site
 api/index.js                    the door Vercel uses to reach the server
 server/
   .env.example                  the settings the server needs. copy it to .env
+  scripts/add-client.js         makes a login and prints its invite link
   scripts/check-analytics.js    asks Vercel for a site's page views, to check the API works
   src/
     server.js                   starts the server on my laptop
     app.js                      builds the Express app: the middleware chain and the routes
     db.js                       the one MongoDB connection
-    middleware/                 the request logger, and where errors turn into JSON
+    models/                     Account (a business and its login), Session (a signed-in browser)
+    routes/                     which function answers which URL
+    controllers/                those functions
+    services/                   passwords, sessions, invites: the logic the controllers lean on
+    dto/                        what gets sent to the browser (never the password hash)
+    middleware/                 requireAuth, requireDatabase, the request logger, errors into JSON
 client/
   index.html                    the page shell
   public/                       images, videos, robots.txt, sitemap.xml (served as-is)
@@ -100,7 +116,8 @@ client/
     data/site.js                phone, email, the client logos
     data/schema.js              the structured data search engines read
     context/LocaleContext.jsx   which language the page is in (it comes from the URL)
-    api/api.js                  the one place the client will talk to the server
+    context/AuthContext.jsx     who is signed in (it asks the server)
+    api/api.js                  the one place the client talks to the server
     components/                 the pieces: Header, Footer, ContactBand, Person...
     views/                      one file per page
 legacy/                         the old HTML site, kept for reference. not deployed
@@ -132,14 +149,23 @@ the client portal. one login per business, and each client sees two things: a bo
 changes to their site, and their site's visitors and page views.
 
 1. ~~the skeleton: `server/`, MongoDB, `/api/health`, the Vercel wiring~~ done
-2. login. i make the accounts with a script that prints a one-time link for the client to set
-   their password. sessions live in MongoDB, the browser only holds a cookie. then flip
-   `SERVER_IS_LIVE` in `client/src/api/api.js` (until then `api.signIn()` answers "not open yet"
-   by itself and nothing leaves the browser)
+2. ~~login: invite links, passwords, sessions, the first page behind the login~~ done
 3. the request box
-4. the stats page, pulled from Vercel Web Analytics. check the API works on the plan first:
-   put a token in `server/.env`, then `npm run check-analytics -- bukascafe`
+4. the stats page, pulled from Vercel Web Analytics (`npm run check-analytics -- bukascafe`
+   proved the API works on the Hobby plan)
 5. later: an admin page, saving daily numbers (Hobby only keeps a month), and fields clients can edit themselves
 
-two things to do before a real client logs in: move MongoDB to Atlas (set `MONGODB_URI` on Vercel),
-and move the Vercel account to Pro, since the free plan is for non-commercial projects.
+how login works, short version:
+- a password is never saved, only bcrypt's hash of it
+- signing in makes a Session in MongoDB and puts a random token in a cookie the page's
+  JavaScript can't read. the server looks the session up on every request (`requireAuth`)
+- a route never asks the browser which client it is. it reads `req.account`
+- five wrong passwords in a row pauses that login for 15 minutes
+- the portal pages are English only for now
+
+before a real client logs in:
+- move MongoDB to Atlas and set `MONGODB_URI` on Vercel. until then a deployed login page
+  says the portal isn't open, because the server has no database to check against
+- move the Vercel account to Pro, since the free plan is for non-commercial projects
+- reword the login page (`login.status`, `login.pitchText`, `login.notOpen` in the content
+  files still say the portal is being built)

@@ -176,6 +176,49 @@ export default {
         pitchText: 'The portal is where clients will check their site stats and project updates. It is being built now.'
     },
 
+    // the two pages behind the login are English only for now, like videos
+
+    // where an invite link lands
+    setPassword: {
+        seo: {
+            title: 'Choose your password - GradientV',
+            description: 'Choose a password for the GradientV client portal.'
+        },
+        label: 'Client portal',
+        heading: 'Choose your password',
+        checking: 'Checking your link…',
+        introFor: 'This sets up the login for',
+        email: 'Email',
+        password: 'New password',
+        confirm: 'Type it again',
+        hint: 'At least 10 characters.',
+        submit: 'Save and sign in',
+        sending: 'Saving…',
+        mismatch: 'Those two passwords are not the same.',
+        badLink: 'This link does not work anymore. It was already used, or it is more than 7 days old. Ask us for a new one.',
+        contact: 'Contact us'
+    },
+
+    portal: {
+        seo: {
+            title: 'Client portal - GradientV',
+            description: 'The GradientV client portal.'
+        },
+        label: 'Client portal',
+        checking: 'Checking who is signed in…',
+        signedInAs: 'Signed in as',
+        signOut: 'Sign out',
+        signingOut: 'Signing out…',
+        requests: {
+            heading: 'Requests',
+            soon: 'Ask for a change to your site and see where each request stands. This is being built next.'
+        },
+        stats: {
+            heading: 'Site stats',
+            soon: 'Visitors and page views for your site. This comes right after requests.'
+        }
+    },
+
     notFound: {
         seo: {
             title: 'Page Not Found - GradientV',

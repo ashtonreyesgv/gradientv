@@ -1,35 +1,43 @@
 // the client login page.
-// there's no server yet, so nobody can actually sign in. the form is real and
-// it goes through api.signIn() like it will later, but for now api.js answers
-// "not open yet" by itself and nothing typed here leaves the browser.
-// when the server exists, the only thing to add here is where to go after signing in
-import { useState } from 'react';
-import { Link } from 'react-router';
+// the form hands the email and password to the server (through AuthContext and api.js).
+// a yes comes back with a session cookie, and the portal opens. a no comes back
+// with a sentence to show under the form
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import Seo from '../components/Seo.jsx';
 import { BUTTON_STYLES } from '../components/ui/ButtonLink.jsx';
 import Eyebrow from '../components/ui/Eyebrow.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 import { useLocale } from '../context/LocaleContext.jsx';
-import * as api from '../api/api.js';
+import { PORTAL_CLOSED } from '../api/api.js';
+import { pagePath } from '../data/pages.js';
 
 const INPUT_CLASS = 'mt-1.5 w-full rounded-xl border border-line bg-paper px-3.5 py-2.5 text-ink outline-none focus:border-accent focus:ring-2 focus:ring-accent/25';
 
 export default function LoginView() {
     const { t, to } = useLocale();
+    const { status, signIn } = useAuth();
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSending, setIsSending] = useState(false);
     const [notice, setNotice] = useState('');
+
+    // signed in, whether just now or from an earlier visit: go straight to the portal.
+    // pagePath and not to(), because the portal is English only for now
+    useEffect(() => {
+        if (status === 'signedIn') navigate(pagePath('portal'), { replace: true });
+    }, [status, navigate]);
 
     async function handleSubmit(event) {
         event.preventDefault();
         setIsSending(true);
         setNotice('');
         try {
-            await api.signIn(email, password);
-            // the server said yes. once the portal exists, this is where it opens
+            await signIn(email, password);
         } catch (error) {
             // "the portal isn't open" gets said in the reader's language. anything else is the server's own message
-            setNotice(error.status === api.PORTAL_CLOSED ? t.login.notOpen : error.message);
+            setNotice(error.status === PORTAL_CLOSED ? t.login.notOpen : error.message);
         } finally {
             setIsSending(false);
         }

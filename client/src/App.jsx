@@ -3,8 +3,9 @@
 // the routes aren't typed out by hand: they're built from PAGES (src/data/pages.js),
 // one for every page in every language it's translated into, so /story, /es/story
 // and /zh/story all land on the same <StoryView /> and it reads its words by language
-import { Navigate, Route, Routes, useLocation } from 'react-router';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
 import Layout from './components/layout/Layout.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 import { LocaleProvider } from './context/LocaleContext.jsx';
 import { PAGES, pagePath } from './data/pages.js';
 import ContactView from './views/ContactView.jsx';
@@ -12,6 +13,8 @@ import HomeView from './views/HomeView.jsx';
 import LegalView from './views/LegalView.jsx';
 import LoginView from './views/LoginView.jsx';
 import NotFoundView from './views/NotFoundView.jsx';
+import PortalView from './views/PortalView.jsx';
+import SetPasswordView from './views/SetPasswordView.jsx';
 import StoryView from './views/StoryView.jsx';
 import TeamView from './views/TeamView.jsx';
 import VideosView from './views/VideosView.jsx';
@@ -23,11 +26,20 @@ const VIEWS = {
     team: <TeamView />,
     contact: <ContactView />,
     login: <LoginView />,
+    setPassword: <SetPasswordView />,
+    portal: <PortalView />,
     privacy: <LegalView doc="privacy" />,
     terms: <LegalView doc="terms" />,
     accessibility: <LegalView doc="accessibility" />,
     videos: <VideosView />
 };
+
+/** one <Route> for every language each of these pages is in */
+function routesFor(pages) {
+    return pages.flatMap((page) => page.locales.map((code) => (
+        <Route key={`${code}:${page.id}`} path={pagePath(page.id, code)} element={VIEWS[page.id]} />
+    )));
+}
 
 /**
  * Anything that isn't a page. The old site's addresses ended in .html
@@ -47,9 +59,16 @@ export default function App() {
         <LocaleProvider>
             <Routes>
                 <Route element={<Layout />}>
-                    {PAGES.flatMap((page) => page.locales.map((code) => (
-                        <Route key={`${code}:${page.id}`} path={pagePath(page.id, code)} element={VIEWS[page.id]} />
-                    )))}
+                    {routesFor(PAGES.filter((page) => !page.auth))}
+
+                    {/* the pages that need to know who is signed in share one AuthProvider, so going
+                        from the login page to the portal doesn't ask the server all over again.
+                        everything else stays outside it: someone reading the Story page shouldn't
+                        cost a trip to the server to find out they aren't a client */}
+                    <Route element={<AuthProvider><Outlet /></AuthProvider>}>
+                        {routesFor(PAGES.filter((page) => page.auth))}
+                    </Route>
+
                     <Route path="*" element={<UnknownPath />} />
                 </Route>
             </Routes>

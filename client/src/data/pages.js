@@ -21,8 +21,12 @@ export const PAGES = [
     { id: 'story', path: '/story', locales: ALL },
     { id: 'team', path: '/team', locales: ALL },
     { id: 'contact', path: '/contact', locales: ALL },
-    // nothing to find on a sign-in form, so it stays out of search results
-    { id: 'login', path: '/login', locales: ALL, noindex: true },
+    // nothing to find on a sign-in form, so it stays out of search results.
+    // auth: the page needs to know who is signed in, so App.jsx puts it inside the AuthProvider
+    { id: 'login', path: '/login', locales: ALL, noindex: true, auth: true },
+    // where an invite link lands, and the portal itself. English only for now
+    { id: 'setPassword', path: '/set-password', locales: ['en'], noindex: true, auth: true },
+    { id: 'portal', path: '/portal', locales: ['en'], noindex: true, auth: true },
     { id: 'privacy', path: '/privacy', locales: ALL },
     { id: 'terms', path: '/terms', locales: ALL },
     { id: 'accessibility', path: '/accessibility', locales: ALL },

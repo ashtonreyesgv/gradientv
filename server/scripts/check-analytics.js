@@ -51,7 +51,12 @@ const body = await response.json().catch(() => null);
 
 if (!response.ok) {
     console.error(`Vercel answered ${response.status}: ${body?.error?.message ?? 'no message'}`);
-    if (HINTS[response.status]) console.error(HINTS[response.status]);
+    if (body?.error?.invalidToken) {
+        // Vercel says this for a token it doesn't recognize at all, whatever the status code is
+        console.error('Vercel does not recognize the token. it probably lost a character when it was pasted. make a new one');
+    } else if (HINTS[response.status]) {
+        console.error(HINTS[response.status]);
+    }
     process.exit(1);
 }
 

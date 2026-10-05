@@ -7,9 +7,12 @@
     "scripts": {
         "start": "node src/server.js",
         "dev": "node --watch --watch-preserve-output --watch-path=src src/server.js",
+        "add-client": "node scripts/add-client.js",
         "check-analytics": "node scripts/check-analytics.js"
     },
     "dependencies": {
+        "bcryptjs": "^3.0.3",
+        "cookie-parser": "^1.4.7",
         "dotenv": "^17.2.3",
         "express": "^5.1.0",
         "mongoose": "^9.10.1"

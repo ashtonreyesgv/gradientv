@@ -15,6 +15,7 @@
         "dev": "concurrently --names server,client --prefix-colors blue,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
         "build": "npm run build -w client",
         "preview": "npm run preview -w client",
+        "add-client": "npm run add-client -w server --",
         "check-analytics": "npm run check-analytics -w server --"
     },
     "devDependencies": {
