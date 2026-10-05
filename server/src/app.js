@@ -10,6 +10,7 @@
 //   /api/health      -> is the server up, is the database up
 //   /api/auth/...    -> signing in and out (requireDatabase goes first)
 //   /api/requests    -> the request box (requireDatabase, then requireAuth, go first)
+//   /api/stats       -> a client's site numbers (same two go first)
 //   notFound         -> only reached if nothing above answered
 //   errorHandler     -> reached whenever anything above threw
 import cookieParser from 'cookie-parser';
@@ -21,6 +22,7 @@ import { requireAuth } from './middleware/requireAuth.js';
 import { requireDatabase } from './middleware/requireDatabase.js';
 import authRoutes from './routes/authRoutes.js';
 import requestRoutes from './routes/requestRoutes.js';
+import statsRoutes from './routes/statsRoutes.js';
 
 export function createApp({ logRequests = true } = {}) {
     const app = express();
@@ -42,6 +44,7 @@ export function createApp({ logRequests = true } = {}) {
     });
     app.use('/api/auth', requireDatabase, authRoutes);
     app.use('/api/requests', requireDatabase, requireAuth, requestRoutes);
+    app.use('/api/stats', requireDatabase, requireAuth, statsRoutes);
 
     app.use(notFound);
     app.use(errorHandler);

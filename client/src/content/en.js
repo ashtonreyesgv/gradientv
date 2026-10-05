@@ -233,7 +233,24 @@ export default {
         },
         stats: {
             heading: 'Site stats',
-            soon: 'Visitors and page views for your site. This is being built next.'
+            periodLabel: 'Time period',
+            // the keys are how many days the server gets asked for
+            periods: {
+                7: 'Last 7 days',
+                30: 'Last 30 days'
+            },
+            loading: 'Loading your stats…',
+            visitors: 'Visitors',
+            pageviews: 'Page views',
+            chartHeading: 'Visitors per day',
+            day: 'Day',
+            pagesHeading: 'Most viewed pages',
+            homePage: 'Home page',
+            sourcesHeading: 'Where visitors came from',
+            direct: 'Direct or unknown',
+            otherSources: 'Other sites',
+            none: 'Nothing to show for these days yet.',
+            note: 'Days are counted on UTC time, so each one starts in the evening in New York. The numbers refresh every 10 minutes.'
         }
     },
 

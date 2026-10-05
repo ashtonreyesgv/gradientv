@@ -8,9 +8,9 @@ Vite runs and builds the app.
 Express + MongoDB for the server, in `server/` next to `client/`, same layout as the CRIZM dashboard.
 Vercel hosts both.
 
-the portal so far: a client sets a password from an invite link, signs in, and can send
-requests for changes to their site. i sign in with an admin login and see everyone's
-requests in one list. their site stats are what gets built next.
+the portal: a client sets a password from an invite link, signs in, sends requests for
+changes to their site, and sees their site's visitors and page views. i sign in with an
+admin login and see everyone's requests in one list.
 
 ---
 
@@ -111,7 +111,8 @@ server/
                                 ChangeRequest (one thing a client asked for)
     routes/                     which function answers which URL
     controllers/                those functions
-    services/                   passwords, sessions, invites, the Slack message: what the controllers lean on
+    services/                   passwords, sessions, invites, the Slack message, asking Vercel for
+                                a site's analytics: what the controllers lean on
     dto/                        what gets sent to the browser (never the password hash)
     middleware/                 requireAuth, requireDatabase, the request logger, errors into JSON
 client/
@@ -132,7 +133,8 @@ client/
     context/AuthContext.jsx     who is signed in (it asks the server)
     api/api.js                  the one place the client talks to the server
     components/                 the pieces: Header, Footer, ContactBand, Person...
-    components/portal/          the pieces behind the login: RequestBox (a client's), RequestInbox (mine)
+    components/portal/          the pieces behind the login: RequestBox (a client's), RequestInbox (mine),
+                                SiteStats and its chart
     views/                      one file per page
 legacy/                         the old HTML site, kept for reference. not deployed
 design/stock/                   the original photos the textures were cut from. not deployed
@@ -165,9 +167,19 @@ changes to their site, and their site's visitors and page views.
 1. ~~the skeleton: `server/`, MongoDB, `/api/health`, the Vercel wiring~~ done
 2. ~~login: invite links, passwords, sessions, the first page behind the login~~ done
 3. ~~the request box, and the admin login that sees everyone's requests~~ done
-4. the stats page, pulled from Vercel Web Analytics (`npm run check-analytics -- bukascafe`
-   proved the API works on the Hobby plan)
+4. ~~the stats card, pulled from Vercel Web Analytics~~ done
 5. later: an admin page, saving daily numbers (Hobby only keeps a month), and fields clients can edit themselves
+
+how the stats work, short version:
+- every client site is a project on my Vercel account, and Vercel already counts its visitors.
+  the server asks Vercel's API for one project's numbers and passes them on. nothing is tracked or stored here
+- which project comes from the login (`vercelProject` on the Account, the last word of `npm run add-client`),
+  never from the browser
+- `VERCEL_TOKEN` can read the whole Vercel account, so it only lives in `server/.env` and on Vercel
+- answers are remembered for 10 minutes, so reloading the portal doesn't keep asking Vercel
+- the chart library (Recharts) is in its own file that only downloads inside the portal.
+  the public pages don't load it
+- days are UTC days, because that's how Vercel cuts them
 
 how login works, short version:
 - a password is never saved, only bcrypt's hash of it
@@ -180,6 +192,8 @@ how login works, short version:
 before a real client logs in:
 - move MongoDB to Atlas and set `MONGODB_URI` on Vercel. until then a deployed login page
   says the portal isn't open, because the server has no database to check against
+- set `VERCEL_TOKEN` (a new one, named for production) and `VERCEL_TEAM` on Vercel for the stats,
+  and `SLACK_WEBHOOK_URL` if i want the Slack message
 - move the Vercel account to Pro, since the free plan is for non-commercial projects
 - reword the login page (`login.status`, `login.pitchText`, `login.notOpen` in the content
   files still say the portal is being built)

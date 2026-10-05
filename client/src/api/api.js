@@ -86,3 +86,14 @@ export function createRequest(message) {
 export function setRequestStatus(id, status) {
     return send('PATCH', `/api/requests/${id}`, { status });
 }
+
+// ---------- site stats ----------
+
+/**
+ * the signed-in client's own site. there's nothing to pass for which site, the server knows from the login
+ * @param {number} days 7 or 30
+ * @return {Promise<Object>} { days, totals, daily, pages, sources }
+ */
+export function getStats(days) {
+    return send('GET', `/api/stats?days=${days}`);
+}
