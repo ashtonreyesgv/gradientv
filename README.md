@@ -198,11 +198,17 @@ how login works, short version:
 - five wrong passwords in a row pauses that login for 15 minutes
 - the portal pages are English only for now
 
-before a real client logs in:
-- move MongoDB to Atlas and set `MONGODB_URI` on Vercel. until then a deployed login page
-  says the portal isn't open, because the server has no database to check against
-- set `VERCEL_TOKEN` (a new one, named for production) and `VERCEL_TEAM` on Vercel for the stats,
-  and `SLACK_WEBHOOK_URL` if i want the Slack message
+what the deployed site runs on (all set up, under the gradientv project on Vercel):
+- the database is MongoDB Atlas, free tier, made through Vercel's Storage tab. Vercel keeps its
+  address in `MONGODB_URI`. my laptop has its own local database, so testing never touches real data
+- `VERCEL_TOKEN` and `VERCEL_TEAM` in Environment Variables are for the stats. the token
+  expires after a year: make a new one and paste it in, or the stats card stops loading
+- `SLACK_WEBHOOK_URL` there too, if i want the Slack message
+- a changed variable only reaches the site on the next build (push, or Redeploy in the dashboard)
+
+still to do:
+- merge `client-portal` into `main`, then change `SITE_URL` in `server/.env.production` to https://gradientv.com
 - move the Vercel account to Pro, since the free plan is for non-commercial projects
-- reword the login page (`login.status`, `login.pitchText`, `login.notOpen` in the content
-  files still say the portal is being built)
+- the free Atlas tier has no backups. write a small export script and run it now and then
+- the privacy policy doesn't mention client logins or requests yet
+- the stats chart cuts days in UTC, so in the evening it shows an empty bar for "tomorrow"

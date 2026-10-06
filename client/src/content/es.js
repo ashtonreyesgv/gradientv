@@ -161,11 +161,10 @@ export default {
         password: 'Contraseña',
         submit: 'Iniciar sesión',
         sending: 'Iniciando sesión…',
-        notOpen: 'El portal de clientes todavía no está abierto, así que hoy no hay nada a lo que entrar. Para cualquier asunto de su proyecto, comuníquese con nosotros directamente.',
+        unavailable: 'No se puede acceder al portal de clientes en este momento. Inténtelo de nuevo en unos minutos o comuníquese con nosotros directamente.',
         contact: 'Contáctenos',
-        status: 'Próximamente',
         pitchHeading: 'Un solo lugar para todo lo que construimos para usted.',
-        pitchText: 'El portal es donde los clientes consultarán las estadísticas de su sitio y las novedades de su proyecto. Lo estamos construyendo ahora.'
+        pitchText: 'Vea cómo va su sitio y envíenos solicitudes de cambios, todo en un solo lugar.'
     },
 
     notFound: {

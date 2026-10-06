@@ -161,11 +161,10 @@ export default {
         password: '密码',
         submit: '登录',
         sending: '正在登录…',
-        notOpen: '客户门户尚未开放，目前还无法登录。如有任何项目相关事宜，请直接联系我们。',
+        unavailable: '客户门户暂时无法访问。请稍后再试，或直接联系我们。',
         contact: '联系我们',
-        status: '即将开放',
         pitchHeading: '我们为您打造的一切，尽在一处。',
-        pitchText: '客户将在这里查看网站数据和项目进展。门户正在建设中。'
+        pitchText: '在这里查看网站的访问情况，并向我们提交修改需求。'
     },
 
     notFound: {

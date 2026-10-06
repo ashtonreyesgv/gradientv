@@ -168,12 +168,11 @@ export default {
         password: 'Password',
         submit: 'Sign in',
         sending: 'Signing in…',
-        // shown after pressing Sign in, until the server exists
-        notOpen: 'The client portal is not open yet, so there is nothing to sign in to today. For anything about your project, reach us directly.',
+        // shown after pressing Sign in when the server or its database can't be reached
+        unavailable: "The client portal can't be reached right now. Try again in a few minutes, or reach us directly.",
         contact: 'Contact us',
-        status: 'Opening soon',
         pitchHeading: 'One place for everything we build for you.',
-        pitchText: 'The portal is where clients will check their site stats and project updates. It is being built now.'
+        pitchText: 'See how your site is doing and send us change requests, all in one place.'
     },
 
     // the two pages behind the login are English only for now, like videos

@@ -36,8 +36,8 @@ export default function LoginView() {
         try {
             await signIn(email, password);
         } catch (error) {
-            // "the portal isn't open" gets said in the reader's language. anything else is the server's own message
-            setNotice(error.status === PORTAL_CLOSED ? t.login.notOpen : error.message);
+            // "the portal can't be reached" gets said in the reader's language. anything else is the server's own message
+            setNotice(error.status === PORTAL_CLOSED ? t.login.unavailable : error.message);
         } finally {
             setIsSending(false);
         }
@@ -119,10 +119,6 @@ export default function LoginView() {
                                     <Eyebrow onNight>{t.login.label}</Eyebrow>
                                     <h2 className="display-md mt-4 max-w-[16ch]">{t.login.pitchHeading}</h2>
                                     <p className="mt-4 max-w-[34ch] text-chalk/75">{t.login.pitchText}</p>
-                                    <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/25 px-3 py-1 text-xs font-medium">
-                                        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-chalk" />
-                                        {t.login.status}
-                                    </p>
                                 </div>
                             </div>
                         </div>
