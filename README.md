@@ -78,6 +78,10 @@ npm run import-site-data -- owner@inforeportingsolutions.com subscribers "C:\pat
 by itself it only says what it would do. add `--save` at the end to do it. it only ever adds,
 and running it twice doesn't double anything.
 
+old assessment rows only carry the site's short name (`quick-check`). to give them the proper one the
+portal shows, put a JSON file of names after the CSV, like `{ "quick-check": "Casino Quick Check" }`.
+InfoReporting's is in `Desktop\InfoReporting-planning\assessment-names.json`.
+
 to get a Slack message when a client sends a request, make an Incoming Webhook at
 api.slack.com/apps and put its address after `SLACK_WEBHOOK_URL=` in `server/.env`
 (and in Vercel's environment variables). without it the request box works the same.

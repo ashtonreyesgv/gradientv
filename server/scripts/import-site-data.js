@@ -8,6 +8,14 @@
 //   assessments   id, created_at, assessment_type, score, risk_level
 //   subscribers   created_at, email, source_page
 //
+// old assessment rows only have the site's short name ('quick-check'), and the portal shows a
+// proper one ('Casino Quick Check'). to give the old rows theirs, add a small JSON file after the CSV:
+//
+//   npm run import-site-data -- owner@example.com assessments "...rows.csv" "...assessment-names.json"
+//
+// it looks like { "quick-check": "Casino Quick Check", "full-assessment": "Casino Readiness Assessment" }.
+// without it they still import, and get their name when the first new result of that kind comes in.
+//
 // by itself it only reads the file and says what it would do. add --save to do it.
 // every row goes through the same checks as a new one. a row that fails is skipped and
 // listed by its line number. it only ever adds: nothing already here is changed or removed,
@@ -32,17 +40,22 @@ const KINDS = {
 const args = process.argv.slice(2);
 const save = args.includes('--save');
 const isLive = loadSettings(args);
-const [email, kind, file] = args.filter((arg) => !arg.startsWith('--'));
+const [email, kind, file, namesFile] = args.filter((arg) => !arg.startsWith('--'));
 
 if (!/^\S+@\S+\.\S+$/.test(email ?? '') || !Object.hasOwn(KINDS, kind ?? '') || !file) {
-    console.error('Usage: npm run import-site-data -- email@example.com assessments|subscribers "path to the .csv" [--save] [--live]');
+    console.error('Usage: npm run import-site-data -- email@example.com assessments|subscribers "path to the .csv" ["path to names.json"] [--save] [--live]');
     process.exit(1);
 }
+
+// the proper names for old assessment rows, when a names file was given. filled in below
+let names = {};
 
 try {
     // npm runs this from inside server/. INIT_CWD is the folder the command was typed in,
     // so a path like .\rows.csv means what it looks like it means
-    const text = await readFile(path.resolve(process.env.INIT_CWD ?? process.cwd(), file), 'utf8');
+    const read = (name) => readFile(path.resolve(process.env.INIT_CWD ?? process.cwd(), name), 'utf8');
+    const text = await read(file);
+    if (namesFile) names = JSON.parse(await read(namesFile));
     const rows = readCsv(text);
     const missing = KINDS[kind].columns.filter((column) => !rows.columns.includes(column));
     if (missing.length > 0) {
@@ -85,7 +98,8 @@ try {
 
 async function addAssessment(account, row) {
     if (row.id === '' || row.score.trim() === '') throw new Error('id or score is empty');
-    const fields = cleanAssessment({ type: row.assessment_type, score: Number(row.score), riskLevel: row.risk_level });
+    const label = Object.hasOwn(names, row.assessment_type) ? names[row.assessment_type] : null;
+    const fields = cleanAssessment({ type: row.assessment_type, label, score: Number(row.score), riskLevel: row.risk_level });
     const when = readDate(row.created_at);
 
     // the id the row had in the old database is what makes a second run recognise it
