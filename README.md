@@ -156,7 +156,8 @@ server/
                                 for a site's analytics, checking what a site sends: what the controllers lean on
     dto/                        what gets sent to the browser (never the password hash)
     middleware/                 requireAuth (a signed-in browser), requireSiteKey (a client's website),
-                                requireDatabase, the request logger, errors into JSON
+                                viewAs (me, looking at a client's portal), requireDatabase,
+                                the request logger, errors into JSON
 client/
   index.html                    the page shell
   public/                       images, videos, robots.txt, sitemap.xml (served as-is)
@@ -177,7 +178,7 @@ client/
     components/                 the pieces: Header, Footer, ContactBand, Person...
     components/portal/          the pieces behind the login: RequestBox (a client's), RequestInbox (mine),
                                 SiteStats and its chart, AssessmentResults and NewsletterSignups
-                                (only for a client whose website sends those)
+                                (only for a client whose website sends those), ClientPicker (my "View as" menu)
     views/                      one file per page
 legacy/                         the old HTML site, kept for reference. not deployed
 design/stock/                   the original photos the textures were cut from. not deployed
@@ -236,6 +237,15 @@ how a client's website sends things here, short version:
   so don't add a field that joins the two
 - each client can save 500 of each kind a day. that's a flood stopper, not a real limit
 - the two cards show up by themselves for a login that has a site key (`siteSendsData` on the account the browser gets)
+
+how i look at a client's portal, short version:
+- my admin login has a "View as" menu (`ClientPicker`). picking a client shows their cards, with their things in them
+- under it, the cards ask the same URLs a client's browser does, plus `?as=<that client's id>`.
+  `viewAs` (middleware) swaps `req.account` for that client, so the route answers exactly as it would for them
+- it's the one place "which client" comes from the browser, so: admin only (anyone else gets a 403),
+  GET only (nothing can be sent or changed as somebody else), and only clients can be viewed
+- that makes a second login per client pointless. a second login is a second client as far as the portal
+  knows: same stats, but not their requests and not what their site sent
 
 how login works, short version:
 - a password is never saved, only bcrypt's hash of it

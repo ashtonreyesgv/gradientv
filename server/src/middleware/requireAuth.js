@@ -3,7 +3,8 @@
 // it finds the session the cookie belongs to and leaves the account on req.account.
 //
 // this is also what keeps clients out of each other's things: a route never asks
-// the browser which client it is. it reads req.account, which only this file sets
+// the browser which client it is. it reads req.account, which only this file sets.
+// (one exception, for me only and only for looking: viewAs.js)
 import { Account } from '../models/Account.js';
 import { findSession } from '../services/sessions.js';
 import { HttpError } from './errorHandlers.js';

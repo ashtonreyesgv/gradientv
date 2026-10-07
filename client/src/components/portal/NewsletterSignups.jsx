@@ -13,7 +13,8 @@ const FIRST_ROWS = 6;
 
 const count = (number) => number.toLocaleString('en-US');
 
-export default function NewsletterSignups() {
+// viewAs is only there when i'm looking at a client's portal from the admin login
+export default function NewsletterSignups({ viewAs }) {
     const { t } = useLocale();
     const words = t.portal.subscribers;
 
@@ -25,7 +26,7 @@ export default function NewsletterSignups() {
 
     useEffect(() => {
         let ignore = false;
-        api.getSubscribers()
+        api.getSubscribers(viewAs)
             .then((found) => {
                 if (!ignore) setSignups(found);
             })
@@ -33,7 +34,7 @@ export default function NewsletterSignups() {
                 if (!ignore) setError(problem.message);
             });
         return () => { ignore = true; };
-    }, []);
+    }, [viewAs]);
 
     async function handleCopy() {
         try {

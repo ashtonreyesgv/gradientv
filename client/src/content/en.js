@@ -219,6 +219,9 @@ export default {
             loading: 'Loading requests…',
             listHeading: 'What you have sent',
             empty: 'Nothing sent yet.',
+            // the next two are what i see in place of the form when i look at a client's portal
+            viewOnly: 'The box for sending a request is hidden while you are viewing as a client.',
+            listHeadingTheirs: 'What they have sent',
             // the keys are the statuses the server uses (server/src/models/ChangeRequest.js)
             status: {
                 'new': 'New',
@@ -250,6 +253,15 @@ export default {
             otherSources: 'Other sites',
             none: 'Nothing to show for these days yet.',
             note: 'Days are counted on UTC time, so each one starts in the evening in New York. The numbers refresh every 10 minutes.'
+        },
+        // admin only: the menu for looking at a client's portal the way they see it
+        viewAs: {
+            label: 'View as',
+            mine: 'Me: requests from clients',
+            notSignedUp: 'invite not used yet',
+            // the business name goes between these two
+            noticeStart: 'This is the portal as',
+            noticeEnd: 'sees it. Nothing can be changed from here.'
         },
         // the next two only show for a client whose own website sends things to the portal
         assessments: {

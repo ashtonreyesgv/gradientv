@@ -15,6 +15,15 @@ export function toAccountJSON(account) {
     };
 }
 
+/** one row of my list of clients: the same as above, plus what tells two logins of one business apart */
+export function toClientJSON(account) {
+    return {
+        ...toAccountJSON(account),
+        // false until they open their invite link and pick a password
+        hasSignedUp: Boolean(account.passwordHash)
+    };
+}
+
 /** just enough for the set-password page to say whose login this is */
 export function toInviteJSON(account) {
     return {

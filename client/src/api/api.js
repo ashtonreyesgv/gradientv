@@ -70,11 +70,27 @@ export function setPassword(token, password) {
     return send('POST', '/api/auth/set-password', { token, password });
 }
 
+// ---------- looking at a client's portal (admin only) ----------
+// the functions below that read things take an optional viewAs: a client's id.
+// with it the server answers as it would for that client. it only does that for the
+// admin login, and only for reading. anyone else who tries gets a 403
+
+/** @return {Promise<Object[]>} every client login, by name: { id, businessName, email, siteSendsData, hasSignedUp } */
+export function listClients() {
+    return send('GET', '/api/admin/clients');
+}
+
+/** puts ?as=<id> (or &as=<id>) on the end of a URL when there is a client to view as */
+function asClient(url, viewAs) {
+    if (!viewAs) return url;
+    return `${url}${url.includes('?') ? '&' : '?'}as=${encodeURIComponent(viewAs)}`;
+}
+
 // ---------- the request box ----------
 
 /** @return {Promise<Object[]>} newest first. a client gets their own, the admin gets everyone's */
-export function listRequests() {
-    return send('GET', '/api/requests');
+export function listRequests(viewAs) {
+    return send('GET', asClient('/api/requests', viewAs));
 }
 
 /** @return {Promise<Object>} the request that was just made */
@@ -94,19 +110,19 @@ export function setRequestStatus(id, status) {
  * @param {number} days 7 or 30
  * @return {Promise<Object>} { days, totals, daily, pages, sources }
  */
-export function getStats(days) {
-    return send('GET', `/api/stats?days=${days}`);
+export function getStats(days, viewAs) {
+    return send('GET', asClient(`/api/stats?days=${days}`, viewAs));
 }
 
 // ---------- what the client's own site collected ----------
 // only for clients whose website sends things to the portal (account.siteSendsData)
 
 /** @return {Promise<Object>} { total, last30, byType, recent } the self-assessments finished on their site */
-export function getAssessments() {
-    return send('GET', '/api/site-data/assessments');
+export function getAssessments(viewAs) {
+    return send('GET', asClient('/api/site-data/assessments', viewAs));
 }
 
 /** @return {Promise<Object>} { total, subscribers } their newsletter signups, newest first */
-export function getSubscribers() {
-    return send('GET', '/api/site-data/subscribers');
+export function getSubscribers(viewAs) {
+    return send('GET', asClient('/api/site-data/subscribers', viewAs));
 }

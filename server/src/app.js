@@ -9,10 +9,14 @@
 //   cookieParser     -> the Cookie header becomes req.cookies
 //   /api/health      -> is the server up, is the database up
 //   /api/auth/...    -> signing in and out (requireDatabase goes first)
-//   /api/requests    -> the request box (requireDatabase, then requireAuth, go first)
-//   /api/stats       -> a client's site numbers (same two go first)
-//   /api/site-data   -> what a client's site collected, for the client to read (same two go first)
+//   /api/requests    -> the request box (requireDatabase, requireAuth, then viewAs, go first)
+//   /api/stats       -> a client's site numbers (same three go first)
+//   /api/site-data   -> what a client's site collected, for the client to read (same three go first)
+//   /api/admin       -> things only i can do (requireDatabase, requireAuth, then requireAdmin)
 //   /api/collect     -> where a client's site sends those things (requireDatabase, then requireSiteKey)
+//
+// viewAs is how i look at a client's portal: it only does something when the admin
+// login adds ?as=<a client's id>, and then those three answer as they would for that client
 //   notFound         -> only reached if nothing above answered
 //   errorHandler     -> reached whenever anything above threw
 import cookieParser from 'cookie-parser';
@@ -20,9 +24,11 @@ import express from 'express';
 import { connectDatabase, databaseIsUp } from './db.js';
 import { errorHandler, notFound } from './middleware/errorHandlers.js';
 import { requestLogger } from './middleware/requestLogger.js';
-import { requireAuth } from './middleware/requireAuth.js';
+import { requireAdmin, requireAuth } from './middleware/requireAuth.js';
 import { requireDatabase } from './middleware/requireDatabase.js';
 import { requireSiteKey } from './middleware/requireSiteKey.js';
+import { viewAs } from './middleware/viewAs.js';
+import adminRoutes from './routes/adminRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import collectRoutes from './routes/collectRoutes.js';
 import requestRoutes from './routes/requestRoutes.js';
@@ -48,9 +54,10 @@ export function createApp({ logRequests = true } = {}) {
         res.json({ ok: true, database: databaseIsUp() });
     });
     app.use('/api/auth', requireDatabase, authRoutes);
-    app.use('/api/requests', requireDatabase, requireAuth, requestRoutes);
-    app.use('/api/stats', requireDatabase, requireAuth, statsRoutes);
-    app.use('/api/site-data', requireDatabase, requireAuth, siteDataRoutes);
+    app.use('/api/requests', requireDatabase, requireAuth, viewAs, requestRoutes);
+    app.use('/api/stats', requireDatabase, requireAuth, viewAs, statsRoutes);
+    app.use('/api/site-data', requireDatabase, requireAuth, viewAs, siteDataRoutes);
+    app.use('/api/admin', requireDatabase, requireAuth, requireAdmin, adminRoutes);
     // the one door that isn't for a signed-in browser: a client's website knocks here with its site key
     app.use('/api/collect', requireDatabase, requireSiteKey, collectRoutes);
 
