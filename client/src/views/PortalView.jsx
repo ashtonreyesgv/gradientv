@@ -1,11 +1,14 @@
 // the page behind the login: who is signed in, a way out, and the two things
-// the portal is for, the request box and the site's stats
+// the portal is for, the request box and the site's stats. a client whose own
+// website sends things here gets two more cards under those
 //
 // the real protection is on the server (requireAuth). this page just doesn't
 // bother drawing itself for someone who isn't signed in, it sends them to the form
 import { lazy, Suspense, useState } from 'react';
 import { Navigate } from 'react-router';
 import Seo from '../components/Seo.jsx';
+import AssessmentResults from '../components/portal/AssessmentResults.jsx';
+import NewsletterSignups from '../components/portal/NewsletterSignups.jsx';
 import RequestBox from '../components/portal/RequestBox.jsx';
 import RequestInbox from '../components/portal/RequestInbox.jsx';
 import { BUTTON_STYLES } from '../components/ui/ButtonLink.jsx';
@@ -87,6 +90,14 @@ export default function PortalView() {
                                     >
                                         <SiteStats />
                                     </Suspense>
+                                    {/* two more cards for a client whose own website sends things here:
+                                        the assessments finished on it, and its newsletter signups */}
+                                    {account.siteSendsData && (
+                                        <>
+                                            <AssessmentResults />
+                                            <NewsletterSignups />
+                                        </>
+                                    )}
                                 </div>
                             )}
                         </>

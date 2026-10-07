@@ -97,3 +97,16 @@ export function setRequestStatus(id, status) {
 export function getStats(days) {
     return send('GET', `/api/stats?days=${days}`);
 }
+
+// ---------- what the client's own site collected ----------
+// only for clients whose website sends things to the portal (account.siteSendsData)
+
+/** @return {Promise<Object>} { total, last30, byType, recent } the self-assessments finished on their site */
+export function getAssessments() {
+    return send('GET', '/api/site-data/assessments');
+}
+
+/** @return {Promise<Object>} { total, subscribers } their newsletter signups, newest first */
+export function getSubscribers() {
+    return send('GET', '/api/site-data/subscribers');
+}

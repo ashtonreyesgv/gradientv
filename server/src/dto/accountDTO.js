@@ -8,7 +8,10 @@ export function toAccountJSON(account) {
         id: String(account._id),
         businessName: account.businessName,
         email: account.email,
-        role: account.role
+        role: account.role,
+        // true when their own website sends things here (it has a site key).
+        // the portal shows those clients two more cards. the key itself never leaves the server
+        siteSendsData: Boolean(account.siteKeyHash)
     };
 }
 

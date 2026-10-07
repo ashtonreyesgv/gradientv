@@ -8,6 +8,8 @@
         "start": "node src/server.js",
         "dev": "node --watch --watch-preserve-output --watch-path=src src/server.js",
         "add-client": "node scripts/add-client.js",
+        "site-key": "node scripts/site-key.js",
+        "import-site-data": "node scripts/import-site-data.js",
         "check-analytics": "node scripts/check-analytics.js"
     },
     "dependencies": {

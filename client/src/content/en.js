@@ -250,6 +250,46 @@ export default {
             otherSources: 'Other sites',
             none: 'Nothing to show for these days yet.',
             note: 'Days are counted on UTC time, so each one starts in the evening in New York. The numbers refresh every 10 minutes.'
+        },
+        // the next two only show for a client whose own website sends things to the portal
+        assessments: {
+            heading: 'Assessments',
+            intro: 'Every self-assessment finished on your site. Results are anonymous: nothing here says who took one.',
+            loading: 'Loading your assessments…',
+            total: 'Completed',
+            last30: 'Last 30 days',
+            byTypeHeading: 'By assessment',
+            completed: 'completed',
+            averageScore: 'Average score',
+            // the keys are the risk levels the server uses (server/src/models/AssessmentResult.js)
+            risk: {
+                low: 'Low risk',
+                medium: 'Medium risk',
+                high: 'High risk'
+            },
+            recentHeading: 'Latest results',
+            date: 'Date',
+            assessment: 'Assessment',
+            score: 'Score',
+            riskLevel: 'Risk level',
+            showAll: 'Show all',
+            showFewer: 'Show fewer',
+            latestOnly: 'These are the latest results. The numbers above count all of them.'
+        },
+        subscribers: {
+            heading: 'Newsletter signups',
+            intro: 'Everyone who signed up for updates on your site.',
+            loading: 'Loading your signups…',
+            total: 'Signed up',
+            empty: 'Nobody has signed up yet.',
+            copy: 'Copy all emails',
+            copied: 'Copied. Paste them wherever you send email from.',
+            copyFailed: 'Could not copy. Select them from the list below.',
+            listHeading: 'Newest first',
+            from: 'from',
+            showAll: 'Show all',
+            showFewer: 'Show fewer',
+            newestOnly: 'This list and the copy button stop at the newest 1,000.'
         }
     },
 

@@ -16,6 +16,8 @@
         "build": "npm run build -w client",
         "preview": "npm run preview -w client",
         "add-client": "npm run add-client -w server --",
+        "site-key": "npm run site-key -w server --",
+        "import-site-data": "npm run import-site-data -w server --",
         "check-analytics": "npm run check-analytics -w server --"
     },
     "devDependencies": {

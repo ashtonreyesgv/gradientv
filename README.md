@@ -12,6 +12,9 @@ the portal: a client sets a password from an invite link, signs in, sends reques
 changes to their site, and sees their site's visitors and page views. i sign in with an
 admin login and see everyone's requests in one list.
 
+a client's own website can also send things here, and that client sees them in their portal.
+InfoReporting Solutions is the first: the self-assessments finished on their site, and their newsletter signups.
+
 ---
 
 ## to run it
@@ -53,6 +56,27 @@ npm run add-client -- "Bukas Cafe" owner@bukascafe.com bukascafe --live
 
 `--live` reads `server/.env.production` in place of `server/.env`: the Atlas address (`MONGODB_URI`)
 and the real site's address (`SITE_URL`). it says which database it used before it prints the link.
+
+to let a client's website send things to the portal, give their login a site key:
+
+```
+npm run site-key -- owner@inforeportingsolutions.com --live
+```
+
+it prints the key once. it goes in that client's own project on Vercel as `PORTAL_SITE_KEY`
+(Settings > Environment Variables), then their site needs a redeploy. the key can only add
+things for that one client. it can't read anything. a login that already has a key keeps it
+unless `--replace` is added, and the old key stops working that second.
+
+to bring over rows from the database a client's site used before (a CSV export of the old table):
+
+```
+npm run import-site-data -- owner@inforeportingsolutions.com assessments "C:\path\to\assessment_results_rows.csv" --live
+npm run import-site-data -- owner@inforeportingsolutions.com subscribers "C:\path\to\subscribers_rows.csv" --live
+```
+
+by itself it only says what it would do. add `--save` at the end to do it. it only ever adds,
+and running it twice doesn't double anything.
 
 to get a Slack message when a client sends a request, make an Incoming Webhook at
 api.slack.com/apps and put its address after `SLACK_WEBHOOK_URL=` in `server/.env`
@@ -111,19 +135,24 @@ api/index.js                    the door Vercel uses to reach the server
 server/
   .env.example                  the settings the server needs. copy it to .env
   scripts/add-client.js         makes a login and prints its invite link
+  scripts/site-key.js           makes the key a client's website uses to send things here
+  scripts/import-site-data.js   brings a client's old rows over from a CSV file
   scripts/check-analytics.js    asks Vercel for a site's page views, to check the API works
+  scripts/settings.js           what those scripts share: --live, and saying which database out loud
   src/
     server.js                   starts the server on my laptop
     app.js                      builds the Express app: the middleware chain and the routes
     db.js                       the one MongoDB connection
     models/                     Account (a business and its login), Session (a signed-in browser),
-                                ChangeRequest (one thing a client asked for)
+                                ChangeRequest (one thing a client asked for), AssessmentResult and
+                                Subscriber (things a client's own website sent here)
     routes/                     which function answers which URL
     controllers/                those functions
-    services/                   passwords, sessions, invites, the Slack message, asking Vercel for
-                                a site's analytics: what the controllers lean on
+    services/                   passwords, sessions, invites, site keys, the Slack message, asking Vercel
+                                for a site's analytics, checking what a site sends: what the controllers lean on
     dto/                        what gets sent to the browser (never the password hash)
-    middleware/                 requireAuth, requireDatabase, the request logger, errors into JSON
+    middleware/                 requireAuth (a signed-in browser), requireSiteKey (a client's website),
+                                requireDatabase, the request logger, errors into JSON
 client/
   index.html                    the page shell
   public/                       images, videos, robots.txt, sitemap.xml (served as-is)
@@ -143,7 +172,8 @@ client/
     api/api.js                  the one place the client talks to the server
     components/                 the pieces: Header, Footer, ContactBand, Person...
     components/portal/          the pieces behind the login: RequestBox (a client's), RequestInbox (mine),
-                                SiteStats and its chart
+                                SiteStats and its chart, AssessmentResults and NewsletterSignups
+                                (only for a client whose website sends those)
     views/                      one file per page
 legacy/                         the old HTML site, kept for reference. not deployed
 design/stock/                   the original photos the textures were cut from. not deployed
@@ -190,6 +220,19 @@ how the stats work, short version:
   the public pages don't load it
 - days are UTC days, because that's how Vercel cuts them
 
+how a client's website sends things here, short version:
+- their site keeps its own small functions (for InfoReporting: `api/submit-assessment.js` and `api/subscribe.js`).
+  those check what the visitor sent, then pass it on to `/api/collect/...` here, with the site key in a header
+- the key says which client it is (`requireSiteKey` puts the account on `req.account`, like `requireAuth` does
+  for a browser). there is no field for naming a client, so one site can't write into another's
+- the key lives in that site's Vercel settings, never in a page or a browser. only a hash of it is saved here
+- it can add and nothing else. reading happens in the portal, signed in, through `/api/site-data/...`
+- an assessment result is anonymous: which assessment, the score, the risk level, the date. nothing about
+  who took it, and no link to a newsletter signup. InfoReporting's privacy policy promises exactly that,
+  so don't add a field that joins the two
+- each client can save 500 of each kind a day. that's a flood stopper, not a real limit
+- the two cards show up by themselves for a login that has a site key (`siteSendsData` on the account the browser gets)
+
 how login works, short version:
 - a password is never saved, only bcrypt's hash of it
 - signing in makes a Session in MongoDB and puts a random token in a cookie the page's
@@ -207,8 +250,9 @@ what the deployed site runs on (all set up, under the gradientv project on Verce
 - a changed variable only reaches the site on the next build (push, or Redeploy in the dashboard)
 
 still to do:
-- merge `client-portal` into `main`, then change `SITE_URL` in `server/.env.production` to https://gradientv.com
 - move the Vercel account to Pro, since the free plan is for non-commercial projects
 - the free Atlas tier has no backups. write a small export script and run it now and then
-- the privacy policy doesn't mention client logins or requests yet
+- the privacy policy doesn't mention client logins or requests yet, or that i hold what clients' sites collect
 - the stats chart cuts days in UTC, so in the evening it shows an empty bar for "tomorrow"
+- there's no command to change a login's email. the results and signups hang off the login,
+  so making a second login with the new email would start it empty

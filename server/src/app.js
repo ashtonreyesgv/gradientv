@@ -11,6 +11,8 @@
 //   /api/auth/...    -> signing in and out (requireDatabase goes first)
 //   /api/requests    -> the request box (requireDatabase, then requireAuth, go first)
 //   /api/stats       -> a client's site numbers (same two go first)
+//   /api/site-data   -> what a client's site collected, for the client to read (same two go first)
+//   /api/collect     -> where a client's site sends those things (requireDatabase, then requireSiteKey)
 //   notFound         -> only reached if nothing above answered
 //   errorHandler     -> reached whenever anything above threw
 import cookieParser from 'cookie-parser';
@@ -20,8 +22,11 @@ import { errorHandler, notFound } from './middleware/errorHandlers.js';
 import { requestLogger } from './middleware/requestLogger.js';
 import { requireAuth } from './middleware/requireAuth.js';
 import { requireDatabase } from './middleware/requireDatabase.js';
+import { requireSiteKey } from './middleware/requireSiteKey.js';
 import authRoutes from './routes/authRoutes.js';
+import collectRoutes from './routes/collectRoutes.js';
 import requestRoutes from './routes/requestRoutes.js';
+import siteDataRoutes from './routes/siteDataRoutes.js';
 import statsRoutes from './routes/statsRoutes.js';
 
 export function createApp({ logRequests = true } = {}) {
@@ -45,6 +50,9 @@ export function createApp({ logRequests = true } = {}) {
     app.use('/api/auth', requireDatabase, authRoutes);
     app.use('/api/requests', requireDatabase, requireAuth, requestRoutes);
     app.use('/api/stats', requireDatabase, requireAuth, statsRoutes);
+    app.use('/api/site-data', requireDatabase, requireAuth, siteDataRoutes);
+    // the one door that isn't for a signed-in browser: a client's website knocks here with its site key
+    app.use('/api/collect', requireDatabase, requireSiteKey, collectRoutes);
 
     app.use(notFound);
     app.use(errorHandler);

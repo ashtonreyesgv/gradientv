@@ -14,6 +14,11 @@ const accountSchema = new mongoose.Schema({
     // their site's project name on Vercel. the stats page asks Vercel about this project
     vercelProject: { type: String, default: null, trim: true },
 
+    // the key their own website uses to send things here (assessment results, newsletter signups).
+    // like the invite link, only a hash of it is saved. null when their site doesn't send anything.
+    // every delivery looks the account up by this, so it gets an index
+    siteKeyHash: { type: String, default: null, index: true },
+
     // never the password itself, only bcrypt's scrambled version of it.
     // null until they open their invite link and pick one
     passwordHash: { type: String, default: null },
